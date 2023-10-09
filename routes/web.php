@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('{name}/{id}-{itemName}', 'ItemController@getItem')->where('id', '[0-9]+')->name('item_name');
+Route::get('{name}/{id}-{itemName}', 'ItemController@getItem')->whereNumber('id')->name('item_name');
 Route::get('{name}', 'CategoryController@getItem')->name('category_name');
 
 
