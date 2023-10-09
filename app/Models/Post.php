@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Category;
+use App\Models\CategoryHome;
 
 class Post extends Model
 {
 	use HasFactory;
 
 	protected $table = 'jos1_content';
-	protected $with = ['category', 'comments'];
+	protected $with = ['comments'];
 
 	public static function getAllHome($count = 0)
     {
@@ -24,6 +24,7 @@ class Post extends Model
                       ->from('jos1_content_frontpage')
                       ->whereRaw('jos1_content.id = jos1_content_frontpage.content_id');
             })
+			->with('category')
 			->orderBy('ordering', 'asc')
             ->get();
 
@@ -32,15 +33,16 @@ class Post extends Model
         return $items;
     }
 
-	public static function getAll($count = 0, $name)
+	public static function getAll($count = 0, $id = 0)
     {
+		if ((int) $id == 0) abort(404);
+
         $items = self::select('*')
-			->where('post_type', 'post')
-			->where('post_status', 'publish')
-			->orderBy('post_date', 'DESC')
+			->where('state', '>', '0')
+			->where('sectionid', $id)
+			->orderBy('ordering', 'asc')
 			->paginate($count);
 
-       
         return $items;
     }
 
@@ -65,7 +67,7 @@ class Post extends Model
 
 	public function category()
     {
-        return $this->belongsTo(Category::class, 'catid', 'id');
+        return $this->belongsTo(CategoryHome::class, 'catid', 'id');
     }
 
 	public function comments()

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', $title)
 @section('main_body')
-<h2>Главная</h2>
+<h2>@if (!empty ($category->title)){{$category->title}}@else Главная@endif</h2>
 @if (!empty ($posts))
 <table class="blog" cellpadding="0" cellspacing="0">
 <tr valign="top"><td>
@@ -24,6 +24,28 @@
 <span class="article_separator">&nbsp;</span>
 		</div>
 @endforeach
-</td></tr></table>
+</td></tr>
+@if (!empty ($pagination) && count ($pagination) > 3)
+<tr>
+	<td valign="top" align="center">
+		<br><br>
+	<table class="pagination">
+		<tr>
+	@foreach ($pagination as $k => $_pagination)
+	@if ($posts->currentPage() == 1 && $k == 0) @continue @endif
+	@if ($posts->currentPage() == $posts->lastPage() && ($k - 1) == $posts->lastPage()) @continue @endif
+	<td>
+	@if ($_pagination['active'] == 1)
+	<span>{!!$_pagination['label']!!}</span>
+	@else
+	<strong><a href="{{$_pagination['url']}}">{!!$_pagination['label']!!}</a></strong>
+	@endif
+	</td>
+	@endforeach
+	</tr></table>
+</td>
+</tr>
+@endif
+</table>
 @endif
 @overwrite

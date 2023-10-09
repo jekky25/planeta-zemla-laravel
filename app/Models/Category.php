@@ -10,6 +10,15 @@ class Category extends Model
 {
 	use HasFactory;
 
-	protected $table = 'jos1_categories';
-	
+	protected $table = 'jos1_sections';
+
+	public static function getByName($name)
+	{
+		$items = self::select('*')
+			->where('alias', $name)
+			->first();
+
+       
+		return $items;
+	}
 }

@@ -32,8 +32,6 @@ class HomeController extends Controller
      */
 	public function index(Request $request)
 	{
-		DB::enableQueryLog();
-
 		$posts	= Post::getAllHome($this->countPerPage);
 
 		return view('home')
