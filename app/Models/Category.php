@@ -17,8 +17,7 @@ class Category extends Model
 		$items = self::select('*')
 			->where('alias', $name)
 			->first();
-
-       
+		
 		return $items;
 	}
 }
