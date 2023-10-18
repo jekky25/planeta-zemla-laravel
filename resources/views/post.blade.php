@@ -27,6 +27,12 @@ google_ad_height = 90;
 </script>
 <script async type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 </div></div>
+<script type="text/javascript">
+<!--
+var jcomments=new JComments(113, 'com_content','/index.php?option=com_jcomments&amp;tmpl=component');
+jcomments.setList('comments-list');
+//-->
+</script>
 @if (!empty($post->comments))
 <div id="jc">
 	<div id="comments">
@@ -122,7 +128,7 @@ function JCommentsInitializeForm()
 	jcEditor.addButton('custombbcode4','Google Video','Введите текст для форматирования','[google]','[/google]','bbcode-google','');
 	jcEditor.addButton('custombbcode8','Facebook Video','Введите текст для форматирования','[fv]','[/fv]','bbcode-facebook','');
 	jcEditor.addButton('custombbcode10','Wikipedia','Введите текст для форматирования','[wiki]','[/wiki]','bbcode-wiki','');
-	jcEditor.initSmiles('/components/com_jcomments/images/smiles');
+	jcEditor.initSmiles('/images/smilies');
 	jcEditor.addSmile(':D','laugh.gif');
 	jcEditor.addSmile(':lol:','lol.gif');
 	jcEditor.addSmile(':-)','smile.gif');
