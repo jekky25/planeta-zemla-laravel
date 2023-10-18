@@ -12,9 +12,11 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 use App\Models\Post;
 use App\Models\Category;
+use Carbon\Carbon;
 
 class ItemController extends Controller
 {
+	public 	$dateFormat = 'd.m.Y H:i';
      /**
      * Create a new controller instance.
      *
@@ -38,6 +40,17 @@ class ItemController extends Controller
 
 
 		$title = $post->title . ' Земля как плванета';
+
+		
+	
+		if (!empty ($post->comments))
+		{
+			foreach ($post->comments as &$item)
+			{
+				$date 		= \Carbon\Carbon::parse($item->date)->format($this->dateFormat);
+				$item->date = $date;
+			}
+		}
 
 		return view('post')
 		->with(compact('title'))

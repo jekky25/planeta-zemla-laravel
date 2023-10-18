@@ -15,7 +15,8 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-	public $countPerPage 	= 10;
+	public 	$countPerPage 	= 10;
+
 	/**
 	 * Create a new controller instance.
 	 *

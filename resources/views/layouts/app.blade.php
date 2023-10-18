@@ -25,9 +25,9 @@
 					<ul class="menu">
 					@foreach ($menuH as $item)
 						@if ($item->home == true)
-							<li class="item{{ $item->id}}" {{ (request()->is('*')) ? ' id="current' : '' }}><a href="{{route('home')}}"><span>{{ $item->name}}</span></a></li>
+							<li class="item{{ $item->id}}" {!! (request()->is('*')) ? ' id="current"' : '' !!}><a href="{{route('home')}}"><span>{{ $item->name}}</span></a></li>
 						@else
-							<li class="item{{ $item->id}}" {{ (request()->is($item->alias)) ? ' id="current' : '' }}><a href="{{route('category_name', $item->alias)}}"><span>{{ $item->name}}</span></a></li>
+							<li class="item{{ $item->id}}" {!! (request()->is($item->alias)) ? ' id="current"' : '' !!}><a href="{{route('category_name', $item->alias)}}"><span>{{ $item->name}}</span></a></li>
 						@endif
 					@endforeach
 					</ul>
