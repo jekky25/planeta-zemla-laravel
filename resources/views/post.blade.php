@@ -37,7 +37,7 @@ jcomments.setList('comments-list');
 <div id="jc">
 	<div id="comments">
 		<h4>Комментарии
-			<a class="rss" href="{{route('comment_rss',$post->id)}}" title="RSS лента комментариев этой записи" target="_blank">&nbsp;</a>
+			<a class="rss" href="{{route('comment_rss',[$post->category['alias'], $post->id,$post->alias])}}" title="RSS лента комментариев этой записи" target="_blank">&nbsp;</a>
 			<a class="refresh" href="#" title="Обновить список комментариев" onclick="jcomments.showPage({{ $post->id }},'com_content',0);return false;">&nbsp;</a>
 		</h4>
 		<div id="comments-list" class="comments-list">
@@ -75,12 +75,12 @@ jcomments.setList('comments-list');
 				</div>
 			</div>
 		</div>
-		@endforeach			
+		@endforeach
 		</div>
 		<div id="comments-list-footer">
 			<a class="refresh" href="#" title="Обновить список комментариев" onclick="jcomments.showPage({{ $item->id }},'com_content',0);return false;">Обновить список комментариев</a>
 			<br />
-			<a class="rss" href="{{route('comment_rss',$post->id)}}" target="_blank">RSS лента комментариев этой записи</a>
+			<a class="rss" href="{{route('comment_rss',[$post->category['alias'], $post->id,$post->alias])}}" target="_blank">RSS лента комментариев этой записи</a>
 		</div>
 	</div>
 	<h4>Добавить комментарий</h4>

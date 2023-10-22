@@ -12,7 +12,6 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 use App\Models\Post;
 use App\Models\Category;
-use Carbon\Carbon;
 
 class ItemController extends Controller
 {
@@ -55,5 +54,36 @@ class ItemController extends Controller
 		return view('post')
 		->with(compact('title'))
         ->with(compact('post'));
+	}
+
+
+	public function getRss(Request $request, $name, $id)
+	{
+		$post   = Post::getById($id);
+
+		if (empty ($post)) abort(404);
+
+		$startStr = '<?xml version="1.0" encoding="utf-8"?>';
+
+		$mTime = \Carbon\Carbon::now();
+		$refreshTime = $mTime->format('D, d M Y H:i:s +0000');
+
+		foreach ($post->comments as &$item)
+		{
+			$mTime = \Carbon\Carbon::create($item->date);
+			$postTime = $mTime->format('D, d M Y H:i:s +0000');
+
+			$item->dateStr = $postTime;
+		}
+
+		
+
+		return response()
+		->view ('post.rss', [
+			'startStr'		=> $startStr,
+			'post'			=> $post,
+			'refreshTime'	=> $refreshTime
+		])
+		->header('Content-Type', 'application/xml');
 	}
 }

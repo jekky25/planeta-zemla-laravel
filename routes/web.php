@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('{name}/{id}-{itemName}', 'ItemController@getItem')->whereNumber('id')->name('item_name');
 Route::get('{name}', 'CategoryController@getItem')->name('category_name');
 
-Route::get('/component/jcomments/feed/com_content/{id}', 'ItemController@getRss')->whereNumber('id')->name('comment_rss');
+Route::get('{name}/{id}-{itemName}/rss', 'ItemController@getRss')->whereNumber('id')->name('comment_rss');
 
 
 
