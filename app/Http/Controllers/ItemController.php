@@ -39,7 +39,7 @@ class ItemController extends Controller
 		if (empty ($post)) abort(404);
 
 
-		$title = $post->title . ' Земля как плванета';
+		$title = $post->title . ' Земля как планета';
 
 		
 	
