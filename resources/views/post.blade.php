@@ -29,7 +29,7 @@ google_ad_height = 90;
 </div></div>
 <script type="text/javascript">
 <!--
-var jcomments=new JComments(113, 'com_content','/index.php?option=com_jcomments&amp;tmpl=component');
+var jcomments=new JComments({{ $post->id }}, 'com_content','{{route('comment_refresh')}}');
 jcomments.setList('comments-list');
 //-->
 </script>
@@ -55,11 +55,11 @@ jcomments.setList('comments-list');
 							<span id="comment-vote-holder-{{ $item->id }}">
 								<a href="#" class="vote-good" title="Хороший комментарий!" onclick="jcomments.voteComment({{ $item->id }}, 1);return false;"></a>
 								<a href="#" class="vote-poor" title="Плохой комментарий!" onclick="jcomments.voteComment({{ $item->id }}, -1);return false;"></a>
-								<span class="vote-none">0</span>
+								<span class="{{ $item->voteClass }}">{{ $item->voteCount }}</span>
 							</span>
 						</span>
 						<a class="comment-anchor" href="{{route('item_name',[$post->category['alias'], $post->id,$post->alias])}}#comment-{{ $item->id }}" id="comment-{{ $item->id }}">#{{ $loop->iteration }}</a>
-						<span class="comment-author">Макс</span>
+						<span class="comment-author">{{ $item->name }}</span>
 						<span class="comment-date">{{ $item->date }}</span>
 						<div class="comment-body" id="comment-body-{{ $item->id }}">{!! $item->comment !!}</div>
 						<span class="comments-buttons">
@@ -84,6 +84,7 @@ jcomments.setList('comments-list');
 		</div>
 	</div>
 	<h4>Добавить комментарий</h4>
+	<a id="addcomments" href="#addcomments"></a>
 	<form id="comments-form" name="comments-form" action="javascript:void(null);">
 	<p>
 		<input id="comments-form-name" type="text" name="name" value="" maxlength="20" size="22" tabindex="1" class="">

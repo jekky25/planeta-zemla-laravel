@@ -14,6 +14,11 @@ class Post extends Model
 
 	protected $table = 'jos1_content';
 	protected $with = ['comments'];
+	protected $voteClass = [
+		'0'	 => 'vote-none',
+		'1'	 => 'vote-good',
+		'-1' => 'vote-poor'
+		];
 
 	public static function getAllHome($count = 0)
     {
@@ -52,7 +57,14 @@ class Post extends Model
 			->where('ID', $id)
 			->first();
 
-       
+		foreach ($item->comments as &$_item)
+		{
+			$_item->voteClass = $item->voteClass[0];
+			if ($_item['isgood'] > $_item['ispoor']) $_item->voteClass = $item->voteClass[1];
+			if ($_item['isgood'] < $_item['ispoor']) $_item->voteClass = $item->voteClass[-1];
+			$_item['voteCount'] =  $_item['isgood'] - $_item['ispoor'];
+		}
+
         return $item;
     }
 

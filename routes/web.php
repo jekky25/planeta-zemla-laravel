@@ -18,6 +18,7 @@ Route::get('{name}/{id}-{itemName}', 'ItemController@getItem')->whereNumber('id'
 Route::get('{name}', 'CategoryController@getItem')->name('category_name');
 
 Route::get('{name}/{id}-{itemName}/rss', 'ItemController@getRss')->whereNumber('id')->name('comment_rss');
+Route::post('ajax/comment_refresh', 'ItemController@getComments')->whereNumber('id')->name('comment_refresh');
 
 
 

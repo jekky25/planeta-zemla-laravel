@@ -8,7 +8,8 @@
 	<link rel="stylesheet" href="{{ asset("css/jcomments/style.css?v=12") }}" type="text/css" />
 	<script type="text/javascript" src="{{ asset("js/system/mootools.js") }}"></script>
 	<script type="text/javascript" src="{{ asset("js/system/caption.js") }}"></script>
-	<script type="text/javascript" src="{{ asset("js/jcomments/jcomments-v2.1.js?t=4") }}"></script>
+	<script type="text/javascript" src="{{ asset("js/jcomments/jcomments-v2.1.js?t=5") }}"></script>
+	<script type="text/javascript" src="{{ asset("js/jcomments/ajax.js?v=1") }}"></script>
 	<link rel="stylesheet" href="{{ asset("css/style.css?t=1") }}" type="text/css" />
 	{!!$MetaTags!!}
 </head>
