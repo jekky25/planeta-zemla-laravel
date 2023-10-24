@@ -15,7 +15,9 @@ use App\Models\Category;
 
 class ItemController extends Controller
 {
-	public 	$dateFormat = 'd.m.Y H:i';
+	public 	$dateFormat 		= 'd.m.Y H:i';
+	public 	$dateFormatToRss 	= 'D, d M Y H:i:s +0000';
+
      /**
      * Create a new controller instance.
      *
@@ -66,17 +68,15 @@ class ItemController extends Controller
 		$startStr = '<?xml version="1.0" encoding="utf-8"?>';
 
 		$mTime = \Carbon\Carbon::now();
-		$refreshTime = $mTime->format('D, d M Y H:i:s +0000');
+		$refreshTime = $mTime->format($this->dateFormatToRss);
 
 		foreach ($post->comments as &$item)
 		{
 			$mTime = \Carbon\Carbon::create($item->date);
-			$postTime = $mTime->format('D, d M Y H:i:s +0000');
+			$postTime = $mTime->format($this->dateFormatToRss);
 
 			$item->dateStr = $postTime;
 		}
-
-		
 
 		return response()
 		->view ('post.rss', [
