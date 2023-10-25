@@ -16,6 +16,8 @@ class Comment extends Model
 
 	public function votes()
     {
-        return $this->hasMany(Vote::class, 'commentid', 'id');
+		$ip = request()->ip();
+		
+        return $this->hasMany(Vote::class, 'commentid', 'id')->where('ip', $ip);
     }	
 }
