@@ -29,7 +29,7 @@ google_ad_height = 90;
 </div></div>
 <script type="text/javascript">
 <!--
-var jcomments=new JComments({{ $post->id }}, 'com_content','{{route('comment_refresh')}}');
+var jcomments=new JComments({{ $post->id }}, 'com_content','{{route('comment_ajax')}}');
 jcomments.setList('comments-list');
 //-->
 </script>

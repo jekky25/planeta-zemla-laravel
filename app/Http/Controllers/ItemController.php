@@ -86,6 +86,24 @@ class ItemController extends Controller
 		->header('Content-Type', 'application/xml');
 	}
 
+	public function getAjax(Request $request)
+	{
+		$arParams = $request->post();
+		if (empty ($arParams['jtxf'])) abort(404);
+		$act = $arParams['jtxf'];
+
+		switch ($act) {
+			case 'JCommentsShowPage':
+				$x = self::getComments($request);
+				break;
+
+			default:
+			abort(404);
+		}
+
+		return $x;
+	}
+
 	public function getComments(Request $request)
 	{
 		$arParams = $request->post();
@@ -95,7 +113,6 @@ class ItemController extends Controller
 		if ($id == 0) abort(404);
 
 		$post   = Post::getById($id);
-
 		$str = '
 		<h4>Комментарии
 			<a class="rss" href="' . route('comment_rss',[$post->category['alias'], $post->id,$post->alias]) . '" title="RSS лента комментариев этой записи" target="_blank">&nbsp;</a>

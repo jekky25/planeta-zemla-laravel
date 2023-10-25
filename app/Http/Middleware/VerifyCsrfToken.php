@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
 	* @var array<int, string>
 	*/
 	protected $except = [
-		'ajax/comment_refresh'
+		'ajax/comment_ajax'
 	];
 }
