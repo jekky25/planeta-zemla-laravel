@@ -14,6 +14,15 @@ class Comment extends Model
 
 	protected $with = ['votes'];
 
+	public static function getById($id)
+    {
+        $item = self::select('*')
+			->where('id', $id)
+			->first();
+
+        return $item;
+    }
+
 	public function votes()
     {
 		$ip = request()->ip();
