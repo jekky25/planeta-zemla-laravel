@@ -53,8 +53,10 @@ jcomments.setList('comments-list');
 					<div class="comment-box usertype-guest">
 						<span class="comments-vote">
 							<span id="comment-vote-holder-{{ $item->id }}">
+								@if (count ($item->votes) == 0)
 								<a href="#" class="vote-good" title="Хороший комментарий!" onclick="jcomments.voteComment({{ $item->id }}, 1);return false;"></a>
 								<a href="#" class="vote-poor" title="Плохой комментарий!" onclick="jcomments.voteComment({{ $item->id }}, -1);return false;"></a>
+								@endif
 								<span class="{{ $item->voteClass }}">{{ $item->voteCount }}</span>
 							</span>
 						</span>

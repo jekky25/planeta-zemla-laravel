@@ -11,5 +11,11 @@ class Comment extends Model
 	use HasFactory;
 
 	protected $table = 'jos1_jcomments';
-	
+
+	protected $with = ['votes'];
+
+	public function votes()
+    {
+        return $this->hasMany(Vote::class, 'commentid', 'id');
+    }	
 }
