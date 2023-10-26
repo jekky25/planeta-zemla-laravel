@@ -13,7 +13,16 @@ google_ad_width = 728;
 google_ad_height = 90;
 //-->
 </script>
-<script async type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+<script type="text/javascript" async src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render={{ RE_SITE_KEY }}"></script>
+<script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('{{ RE_SITE_KEY }}', { action: 'contact' }).then(function (token) {
+                var recaptchaResponse = document.getElementById('recaptchaResponse');
+                recaptchaResponse.value = token;
+            });
+        });
+</script>
 </div>
 <div class="article-content">{!! $post->introtext !!}{!! $post->fulltext !!}
 <div class="gog_baner2">
@@ -103,12 +112,7 @@ jcomments.setList('comments-list');
 		<input class="checkbox" id="comments-form-subscribe" type="checkbox" name="subscribe" value="1" tabindex="5">
 		<label for="comments-form-subscribe">Подписаться на уведомления о новых комментариях</label><br>
 	</p>
-	<p>
-		<img class="captcha" onclick="jcomments.clear('captcha');" id="comments-form-captcha-image" name="captcha-image" src="http://www.planeta-zemla.ru/index.php?option=com_jcomments&amp;task=captcha&amp;tmpl=component&amp;ac=34400" width="121" height="60" alt="Защитный код"><br>
-		<span class="captcha" onclick="jcomments.clear('captcha');">Обновить</span><br>
-		<input class="captcha" id="comments-form-captcha" type="text" name="captcha-refid" value="" size="5" tabindex="6"><br>
-		<input type="hidden" name="recaptcha_response" id="recaptchaResponse" value="03AFcWeA7URZfklRu8QXsUy222hO7FVyyTQ3QcNRloxxoqaKThwjqw-GyRIbSye0Q6X2ABvvCip1p607N2cmcAvcEXFL9dPBJpMzWYvKQOJoUV3_eorggLPnUT0zWtqOrLFsFXtW3p0Ng2ElFglJVV7ZLcSTtLRvNp0qYjtbGZWfi8LMsoBLNR0uQHz5JuDjjOr_QMZdINVwpdVqETu7tNQn_KTgmlezl4o60foHvlYHJXQ4FWBcDvQadnzYzHUSs_WftPb2c5d-dBT-2aNEzogWSUqYQoKqGVRpMJs6UiAnftmjT8KJjdzJCU1jSoZ7ie4B-8TgQHGOaHL7uqZewrxh5r4cWaJn8jwN4XmfjQILBHiggliouB5pN1UgDM7urkU5P-TkwszPVTZ548sIRuHj5agP2mInd0OIzGUGYOUdVNxKtFjNxgoK9Kg6-APPX5nRXjtTzZNK3DQa7NvZRE5ubuU57QbBfoB-fuNTFM1_LPP3gGm_jm8u7Fl5ro8XlmyE3ZtzoRng7PgrD2VDqQrYWmrlI_LwOqLVD-xUTWELvcGLullWKdbsw">
-	</p>
+	<input type="hidden" name="recaptcha_response" id="recaptchaResponse">
 	<div id="comments-form-buttons">
 		<div class="btn" id="comments-form-send"><div><a href="#" tabindex="7" onclick="jcomments.saveComment();return false;" title="Отправить (Ctrl+Enter)">Отправить</a></div></div>
 		<div class="btn" id="comments-form-cancel" style="display:none;"><div><a href="#" tabindex="8" onclick="return false;" title="Отменить">Отменить</a></div></div>
@@ -174,7 +178,6 @@ else {if (typeof window.onload=='function'){
 } else window.onload=JCommentsInitializeForm;} 
 //-->
 </script>
-<div id="comments-footer" align="center"><a href="http://www.joomlatune.com" title="JComments" target="_blank">JComments</a></div>
 <script type="text/javascript">
 <!--
 jcomments.setAntiCache(1,0,0);
