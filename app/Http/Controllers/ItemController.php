@@ -218,5 +218,26 @@ class ItemController extends Controller
 
 		$comment->save();
 
+		$oPost 		= new Post();
+		$voteClass 	= $oPost->getVoteClass();
+		
+		$comment->voteClassOut = $voteClass[0];
+		if ($comment['isgood'] > $comment['ispoor']) $comment->voteClassOut = $voteClass[1];
+		if ($comment['isgood'] < $comment['ispoor']) $comment->voteClassOut = $voteClass[-1];
+		$comment['voteCount'] =  $comment['isgood'] - $comment['ispoor'];
+
+
+		$str = '<span class="' . $comment->voteClassOut . '">' . $comment->voteCount . '</span>';
+		$str = str_replace(["\r", "\n"], '', $str);
+
+		$y = "jcomments.updateVote('" . $id . "','" . $str . "');";
+
+		$arX = [
+			"n" => "js",
+			"d" => $y
+		];
+		$x = '[ ' . json_encode ($arX) . ' ]';
+
+		return $x;
 	}
 }

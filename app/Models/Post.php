@@ -87,4 +87,8 @@ class Post extends Model
         return $this->hasMany(Comment::class, 'object_id', 'id')->where('published', 1);
     }
 	
+	public function getVoteClass()
+	{
+		return $this->voteClass;
+	}
 }
