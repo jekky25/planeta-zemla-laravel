@@ -208,8 +208,15 @@ class ItemController extends Controller
 			'value' 	=> $vote
 		];
 
-		$vote = new Vote ($aFields);
-		$vote->save();
+		$oVote = new Vote ($aFields);
+		$oVote->save();
+
+		if ($vote == '1')
+			$comment->isgood = $comment->isgood + 1;
+		else
+			$comment->ispoor = $comment->ispoor + 1;
+
+		$comment->save();
 
 	}
 }

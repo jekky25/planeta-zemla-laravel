@@ -10,9 +10,9 @@ class Comment extends Model
 {
 	use HasFactory;
 
-	protected $table = 'jos1_jcomments';
-
-	protected $with = ['votes'];
+	protected 	$table 			= 'jos1_jcomments';
+	protected 	$with 			= ['votes'];
+	public 		$timestamps 	= false;
 
 	public static function getById($id)
     {
