@@ -162,6 +162,11 @@ class ItemController extends Controller
 		}
 		
 		$str .= '</div>';
+		$str .= '<div id="comments-list-footer">
+			<a class="refresh" href="#" title="Обновить список комментариев" onclick="jcomments.showPage(' . $post->id . ',`com_content`,0);return false;">Обновить список комментариев</a>
+			<br />
+			<a class="rss" href="' . route('comment_rss',[$post->category['alias'], $post->id,$post->alias]) . '" target="_blank">RSS лента комментариев этой записи</a>
+		</div>';
 
 		$str = str_replace(["\r", "\n"], '', $str);
 
