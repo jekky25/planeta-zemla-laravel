@@ -13,8 +13,10 @@ google_ad_width = 728;
 google_ad_height = 90;
 //-->
 </script>
+@push('scripts')
 <script type="text/javascript" async src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render={{ RE_SITE_KEY }}"></script>
+@endpush
 <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('{{ RE_SITE_KEY }}', { action: 'contact' }).then(function (token) {

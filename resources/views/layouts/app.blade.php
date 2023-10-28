@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="{{ asset("js/system/caption.js") }}"></script>
 	<script type="text/javascript" src="{{ asset("js/jcomments/jcomments-v2.1.js?t=5") }}"></script>
 	<script type="text/javascript" src="{{ asset("js/jcomments/ajax.js?v=1") }}"></script>
+	@stack('scripts')
 	<link rel="stylesheet" href="{{ asset("css/style.css?t=1") }}" type="text/css" />
 	{!!$MetaTags!!}
 </head>
