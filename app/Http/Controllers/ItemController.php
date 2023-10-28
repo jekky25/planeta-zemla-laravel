@@ -15,6 +15,8 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Vote;
 
+use Validator;
+
 class ItemController extends Controller
 {
 	public 	$dateFormat 		= 'd.m.Y H:i';
@@ -97,6 +99,10 @@ class ItemController extends Controller
 			
 			case 'JCommentsVoteComment':
 				$x = self::setVoteComment($request);
+				break;
+
+			case 'JCommentsAddComment':
+				$x = self::addComment($request);
 				break;
 			default:
 			abort(404);
@@ -185,6 +191,64 @@ class ItemController extends Controller
 		$x = '[ ' . json_encode ($arX) . ' ]';
 
 		return $x;
+	}
+
+	public function addComment(Request $request)
+	{
+		$arParams = $request->post();
+
+		$rules = [
+			'name' 		=> ['required', 'string', 'max:30'],
+			'email' 	=> ['required', 'email'],
+			'comment' 	=> ['required', 'max:1000']
+		];
+
+		$errMessages = ['name.required' 	=> 'Поле Имя не заполнено',
+						'name.max' 			=> 'Поле Имя должно быть не более :max символов',
+						'email.required' 	=> 'Поле Емайл не заполнено',
+						'email.email' 		=> 'Поле Емайл заполнено не корректно',
+						'comment.required' 	=> 'Комментарий не заполнен',
+						'comment.max'	 	=> 'Ваш комментарий слишком длинный',
+		];
+
+		$validator = Validator::make($arParams, $rules, $errMessages);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+			foreach ($messages->toArray() as $n => $mess)
+			{
+				return showErrorMessage($mess, $n);
+				break;
+			}
+		}
+
+		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+		$recaptcha_secret = RE_SEC_KEY;
+		$recaptcha_response = $arParams['recaptcha_response'];
+
+		$ch = curl_init();
+		curl_setopt_array($ch, [
+			CURLOPT_URL => 'https://www.google.com/recaptcha/api/siteverify',
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => [
+			'secret' => $recaptcha_secret,
+			'response' => $recaptcha_response,
+			'remoteip' => $_SERVER['REMOTE_ADDR']
+		   ],
+		   CURLOPT_RETURNTRANSFER => true
+		  ]);
+	
+		$output = curl_exec($ch);
+		curl_close($ch);
+	
+		$recaptcha = json_decode($output);
+
+		if ($recaptcha->success === true && $recaptcha->score >= 0.5) {
+		} else {
+			$strError = 'Капча не пройдена';
+			return showErrorMessage($strError, 'captcha');
+		}
+
 	}
 
 	public function setVoteComment(Request $request)
