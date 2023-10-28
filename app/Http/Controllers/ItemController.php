@@ -217,7 +217,7 @@ class ItemController extends Controller
 			$messages = $validator->messages();
 			foreach ($messages->toArray() as $n => $mess)
 			{
-				return showErrorMessage($mess, $n);
+				return showErrorMessage($mess, 'comments-form');
 				break;
 			}
 		}
@@ -246,7 +246,7 @@ class ItemController extends Controller
 		if ($recaptcha->success === true && $recaptcha->score >= 0.5) {
 		} else {
 			$strError = 'Капча не пройдена';
-			return showErrorMessage($strError, 'captcha');
+			return showErrorMessage($strError, 'comments-form');
 		}
 
 	}
