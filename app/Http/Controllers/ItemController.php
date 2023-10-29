@@ -249,6 +249,24 @@ class ItemController extends Controller
 			return showErrorMessage($strError, 'comments-form');
 		}
 
+		$ip 		= request()->ip();
+		$date 		= \Carbon\Carbon::parse()->format($this->dateFormatForDb);
+
+		$aFields = [
+			'lang'				=> 'ru-RU',
+			'comment'		 	=> $arParams['comment'],
+			'date'	 			=> $date,
+			'object_id'			=> $arParams['object_id'],
+			'name'	 			=> $arParams['name'],
+			'username'		 	=> $arParams['name'],
+			'email'		 		=> $arParams['email'],
+			'ip'	 			=> $ip,
+		];
+
+
+		$oComment = new Comment ($aFields);
+		$oComment->save();
+
 	}
 
 	public function setVoteComment(Request $request)
@@ -266,7 +284,6 @@ class ItemController extends Controller
 		if (count ($comment->votes) > 0) abort(404);
 
 		$ip = request()->ip();
-
 		$date 		= \Carbon\Carbon::parse()->format($this->dateFormatForDb);
 
 		$aFields = [
