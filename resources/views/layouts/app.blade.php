@@ -60,11 +60,16 @@
 			</div>
 			<div id="footer">
 				<div id="rights">
-				<p>копирование материалов разрешено только с установкой обратной ссылки на наш сайт</p>
-				<p>&copy; 2010 все права защищены</p>
+					<p>копирование материалов разрешено только с установкой обратной ссылки на наш сайт</p>
+					<p>&copy; 2010 все права защищены</p>
 				</div>
 				<div id="feedback">
-					<jdoc:include type="modules" name="bottom" style="xhtml" />
+					<div class="moduletable">
+						<ul class="menu">
+							<li class="item3"><a href="{{route('feedback')}}"><span>Обратная связь</span></a></li>
+						</ul>
+					</div>
+	
 				</div>
 	<div id="counters">
 <!--Rating@Mail.ru counter-->

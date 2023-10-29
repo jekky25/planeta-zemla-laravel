@@ -20,6 +20,8 @@ Route::get('{name}', 'CategoryController@getItem')->where('name', '!=', 'clear')
 Route::get('{name}/{id}-{itemName}/rss', 'ItemController@getRss')->whereNumber('id')->name('comment_rss');
 Route::post('ajax/comment_ajax', 'ItemController@getAjax')->whereNumber('id')->name('comment_ajax');
 
+Route::get('feedback', 'FeedBackController@getFeedBack')->name('feedback');
+
 if (!function_exists('pr')) {
 	function pr (...$ar)
 	{
