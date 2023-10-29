@@ -21,3 +21,21 @@ if (!function_exists('showErrorMessage')) {
 		return $x;
 	}
 }
+
+//out info messages
+if (!function_exists('showInfoMessage')) {
+	function showInfoMessage( $message, $target = '') {
+		$message = is_array ($message) ? $message[0] : $message;
+		$y = "jcomments.message('" . $message . "','" . $target . "');";
+
+		$x = '[ { "n": "js", "d": "' . $y . '" } ]';
+		$arX = [
+			"n" => "js",
+			"d" => $y
+
+		];
+		$x = '[ ' . json_encode ($arX) . ' ]';
+		return $x;
+	}
+}
+

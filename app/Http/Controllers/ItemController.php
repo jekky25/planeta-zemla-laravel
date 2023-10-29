@@ -267,6 +267,9 @@ class ItemController extends Controller
 		$oComment = new Comment ($aFields);
 		$oComment->save();
 
+		$mess = 'Спасибо за комментарий. Он будет опубликован после проверки модератором';
+		return showInfoMessage($mess, 'comments-form');
+
 	}
 
 	public function setVoteComment(Request $request)
