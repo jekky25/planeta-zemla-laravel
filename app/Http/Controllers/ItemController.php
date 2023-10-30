@@ -178,8 +178,6 @@ class ItemController extends Controller
 
 		$y = "jcomments.updateList('" . $str . "','r');";
 
-		
-
 		$x = '[ { "n": "js", "d": "' . $y . '" } ]';
 
 		$arX = [
@@ -228,7 +226,7 @@ class ItemController extends Controller
 
 		$ch = curl_init();
 		curl_setopt_array($ch, [
-			CURLOPT_URL => 'https://www.google.com/recaptcha/api/siteverify',
+			CURLOPT_URL => $recaptcha_url,
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => [
 			'secret' => $recaptcha_secret,
