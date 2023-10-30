@@ -44,7 +44,7 @@ class FeedbackController extends Controller
 			'name' 		=> ['required', 'string', 'max:30'],
 			'email' 	=> ['required', 'email'],
 			'subject'	=> ['required', 'max:300'],
-			'comment' 	=> ['required', 'max:1000']
+			'text'	 	=> ['required', 'max:1000']
 		];
 		$errMessages = ['name.required' 	=> 'Поле Имя не заполнено',
 						'name.max' 			=> 'Поле Имя должно быть не более :max символов',
@@ -52,8 +52,8 @@ class FeedbackController extends Controller
 						'email.email' 		=> 'Поле Емайл заполнено не корректно',
 						'subject.required' 	=> 'Тема не заполнена',
 						'subject.max'	 	=> 'Поле Тема должно быть не более :max символов',
-						'comment.required' 	=> 'Комментарий не заполнен',
-						'comment.max'	 	=> 'Ваш комментарий слишком длинный',
+						'text.required' 	=> 'Комментарий не заполнен',
+						'text.max'	 	=> 'Ваш комментарий слишком длинный',
 		];
 
 		$validator = Validator::make($arParams, $rules, $errMessages);
@@ -64,6 +64,74 @@ class FeedbackController extends Controller
                         ->withInput();
 		}
 
+		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+		$recaptcha_secret = RE_SEC_KEY;
+		$recaptcha_response = $arParams['recaptcha_response'];
+
+		$ch = curl_init();
+		curl_setopt_array($ch, [
+			CURLOPT_URL => $recaptcha_url,
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => [
+			'secret' => $recaptcha_secret,
+			'response' => $recaptcha_response,
+			'remoteip' => $_SERVER['REMOTE_ADDR']
+		   ],
+		   CURLOPT_RETURNTRANSFER => true
+		  ]);
+	
+		$output = curl_exec($ch);
+		curl_close($ch);
+	
+		$recaptcha = json_decode($output);
+
+		if ($recaptcha->success === true && $recaptcha->score >= 0.5) {
+		} else {
+			$strError = 'Капча не пройдена';
+			return redirect('feedback')
+                        ->withErrors($strError)
+                        ->withInput();
+		}
+
+		$email_template = 'feedback';
+		include_once('../includes/emailer.php');
+	
+		$emailer = new emailer(0);
+		$emailer->from('<support@planeta-zemla.ru>');
+		$emailer->replyto('<support@planeta-zemla.ru>');
+		$emailer->email_address('support@planeta-zemla.ru');
+		$emailer->set_subject('Сообщение через обратную связь www.planeta-zemla.ru');
+
+		$EMAIL['NAME'] 		= $arParams['name'];
+		$EMAIL['EMAIL'] 	= $arParams['email'];
+		$EMAIL['SUBJECT'] 	= $arParams['subject'];
+		$EMAIL['TEXT'] 		= $arParams['text'];
+
+		$GLOBALS['EMAIL'] 	= $EMAIL;
+
+		$emailer->use_template($email_template);
+		$emailer->send();
+		$emailer->reset();
+
+		if (!empty ($arParams['email_copy']) && $arParams['email_copy'] == 1)
+		{
+			$emailer = new emailer(0);
+			$emailer->from('<support@planeta-zemla.ru>');
+			$emailer->replyto('<support@planeta-zemla.ru>');
+			$emailer->email_address($arParams['email']);
+			$emailer->set_subject('Сообщение через обратную связь www.planeta-zemla.ru');
+
+			$EMAIL['NAME'] 		= $arParams['name'];
+			$EMAIL['EMAIL'] 	= $arParams['email'];
+			$EMAIL['SUBJECT'] 	= $arParams['subject'];
+			$EMAIL['TEXT'] 		= $arParams['text'];
+
+			$GLOBALS['EMAIL'] 	= $EMAIL;
+
+			$emailer->use_template($email_template);
+			$emailer->send();
+			$emailer->reset();
+		}
 	}
 }
 

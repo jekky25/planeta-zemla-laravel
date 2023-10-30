@@ -37,21 +37,21 @@
 					<div class="contact_email">
 						<label for="contact_name">&nbsp;Введите ваше имя:</label>
 						<br />
-						<input type="text" name="name" id="contact_name" size="30" class="inputbox" value="" />
+						<input type="text" name="name" id="contact_name" size="30" class="inputbox" value="{{ old('name') }}" />
 						<br />
 						<label id="contact_emailmsg" for="contact_email">&nbsp;E-mail адрес:</label>
 						<br />
-						<input type="text" id="contact_email" name="email" size="30" value="" class="inputbox required validate-email" maxlength="100" />
+						<input type="text" id="contact_email" name="email" size="30" value="{{ old('email') }}" class="inputbox required validate-email" maxlength="100" />
 						<br />
 						<label for="contact_subject">&nbsp;Тема сообщения:</label>
 						<br />
-						<input type="text" name="subject" id="contact_subject" size="30" class="inputbox" value="" />
+						<input type="text" name="subject" id="contact_subject" size="30" class="inputbox" value="{{ old('subject') }}" />
 						<br /><br />
 						<label id="contact_textmsg" for="contact_text">&nbsp;Введите текст вашего сообщения:</label>
 						<br />
-						<textarea cols="50" rows="10" name="text" id="contact_text" class="inputbox required"></textarea>
+						<textarea cols="50" rows="10" name="text" id="contact_text" class="inputbox required">{{ old('text') }}</textarea>
 						<br />
-						<input type="checkbox" name="email_copy" id="contact_email_copy" value="1"  />
+						<input type="checkbox" name="email_copy" id="contact_email_copy" value="1"@if (!empty( old ('email_copy'))) checked="checked"@endif />
 						<label for="contact_email_copy">Отправить копию этого сообщения на ваш адрес</label>
 						<br />
 						<br />
