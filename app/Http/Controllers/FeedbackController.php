@@ -132,6 +132,8 @@ class FeedbackController extends Controller
 			$emailer->send();
 			$emailer->reset();
 		}
+
+		return back()->with('success', 'Ваше сообщение было успешно отправлено!');
 	}
 }
 

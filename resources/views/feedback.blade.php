@@ -24,6 +24,7 @@
 	<table width="100%" cellpadding="0" cellspacing="0" border="0" class="contentpaneopen">
 		<tr>
 			<td colspan="2">
+			@if(session()->has('success'))<div class="success">{{ session()->get('success') }}</div>@endif 
 				@if (!empty ($errors->all()))
 				<div class="error">
 				@foreach ($errors->all() as $message)

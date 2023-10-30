@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="{{ asset("js/jcomments/jcomments-v2.1.js?t=5") }}"></script>
 	<script type="text/javascript" src="{{ asset("js/jcomments/ajax.js?v=1") }}"></script>
 	@stack('scripts')
-	<link rel="stylesheet" href="{{ asset("css/style.css?t=2") }}" type="text/css" />
+	<link rel="stylesheet" href="{{ asset("css/style.css?t=3") }}" type="text/css" />
 	{!!$MetaTags!!}
 </head>
 <body>
