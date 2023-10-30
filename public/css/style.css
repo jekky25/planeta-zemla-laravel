@@ -85,3 +85,6 @@ div.gog_baner1 {width:730px; margin:0 auto; padding-bottom:10px;}
 div.gog_baner2 {width:730px; margin:0 auto; padding-bottom:10px; padding-top:10px;}
 
 .pagination td {padding:10px;}
+
+.error {color: #bb0101; padding-bottom: 10px;}
+.error p {}

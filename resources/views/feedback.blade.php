@@ -16,27 +16,21 @@
         });
     </script>
 <div id="component-contact">
+	<div class="componentheading"></div>
+	<h2 class="contentheading">
+		<a href="{{ route('feedback') }}" class="contentpagetitle">
+		Обратная связь</a>
+	</h2>
 	<table width="100%" cellpadding="0" cellspacing="0" border="0" class="contentpaneopen">
 		<tr>
-			<td>
-				<table border="0" width="100%">
-					<tr>
-						<td></td>
-						<td rowspan="2" align="right" valign="top"></td>
-					</tr>
-					<tr>
-						<td><br /></td>
-					</tr>
-				</table>
-			</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td></td>
-		</tr>
-		<tr>
 			<td colspan="2">
-				<br /><br />
+				@if (!empty ($errors->all()))
+				<div class="error">
+				@foreach ($errors->all() as $message)
+				<p>{{ $message }}</p>
+				@endforeach
+				</div>
+				@endif
 				<form action="{{route('feedback')}}" method="post" name="emailForm" id="emailForm" class="form-validate">
 					{{ csrf_field() }}
 					<input type="hidden" name="recaptcha_response" id="recaptchaResponse">
