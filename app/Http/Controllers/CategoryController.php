@@ -52,7 +52,7 @@ class CategoryController extends Controller
 		$ind = count ($pagination) - 1;
 		$pagination[$ind] = str_replace ('Next ','', $pagination[$ind]);
 
-		$title = $category->title . ' Земля как плванета';
+		$title = $category->title . ' Земля как планета';
         
 		return view('home')
 			->with(compact('title'))
