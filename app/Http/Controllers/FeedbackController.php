@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 use Validator;
+use App\Helpers\Email;
 
 class FeedbackController extends Controller
 {
@@ -89,48 +90,28 @@ class FeedbackController extends Controller
 		} else {
 			$strError = 'Капча не пройдена';
 			return redirect('feedback')
-                        ->withErrors($strError)
-                        ->withInput();
+						->withErrors($strError)
+						->withInput();
 		}
 
 		$email_template = 'feedback';
-		include_once('../includes/emailer.php');
-	
-		$emailer = new emailer(0);
-		$emailer->from('<support@planeta-zemla.ru>');
-		$emailer->replyto('<support@planeta-zemla.ru>');
-		$emailer->email_address('support@planeta-zemla.ru');
-		$emailer->set_subject('Сообщение через обратную связь www.planeta-zemla.ru');
 
 		$EMAIL['NAME'] 		= $arParams['name'];
 		$EMAIL['EMAIL'] 	= $arParams['email'];
 		$EMAIL['SUBJECT'] 	= $arParams['subject'];
 		$EMAIL['TEXT'] 		= $arParams['text'];
 
-		$GLOBALS['EMAIL'] 	= $EMAIL;
-
-		$emailer->use_template($email_template);
-		$emailer->send();
-		$emailer->reset();
+		Email::sendEmail($email_template, 'jekky25@list.ru', $EMAIL, 'Сообщение через обратную связь www.planeta-zemla.ru');
 
 		if (!empty ($arParams['email_copy']) && $arParams['email_copy'] == 1)
 		{
-			$emailer = new emailer(0);
-			$emailer->from('<support@planeta-zemla.ru>');
-			$emailer->replyto('<support@planeta-zemla.ru>');
-			$emailer->email_address($arParams['email']);
-			$emailer->set_subject('Сообщение через обратную связь www.planeta-zemla.ru');
-
 			$EMAIL['NAME'] 		= $arParams['name'];
 			$EMAIL['EMAIL'] 	= $arParams['email'];
 			$EMAIL['SUBJECT'] 	= $arParams['subject'];
 			$EMAIL['TEXT'] 		= $arParams['text'];
 
-			$GLOBALS['EMAIL'] 	= $EMAIL;
+			Email::sendEmail($email_template, $arParams['email'], $EMAIL, 'Сообщение через обратную связь www.planeta-zemla.ru');
 
-			$emailer->use_template($email_template);
-			$emailer->send();
-			$emailer->reset();
 		}
 
 		return back()->with('success', 'Ваше сообщение было успешно отправлено!');

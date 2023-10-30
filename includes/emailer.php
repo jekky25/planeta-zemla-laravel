@@ -1,6 +1,5 @@
 <?php
-namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Session;
+namespace App\Helpers;
 
 class emailer
 {
