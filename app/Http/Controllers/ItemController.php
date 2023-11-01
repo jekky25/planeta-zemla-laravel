@@ -44,7 +44,7 @@ class ItemController extends Controller
 		if (empty ($post)) abort(404);
 
 		$title = $post->title . ' Земля как планета';
-	
+
 		if (!empty ($post->comments))
 		{
 			foreach ($post->comments as &$item)
