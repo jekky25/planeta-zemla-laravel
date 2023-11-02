@@ -19,7 +19,7 @@
 				@endif
 			</div>
 			@if (!empty ($code_sape))
-			<div class="outS">{{ array_shift($code_sape) }}</div>
+			<div class="outS">{!! array_shift($code_sape) !!}</div>
 			@endif
 	</div>
 </div>
