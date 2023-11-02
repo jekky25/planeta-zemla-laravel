@@ -18,6 +18,9 @@
 				<a href="{{route('item_name',[$item->category['alias'], $item->id,$item->alias])}}#addcomments" class="comments-link">Добавить комментарий</a>
 				@endif
 			</div>
+			@if (!empty ($code_sape))
+			<div class="outS">{{ array_shift($code_sape) }}</div>
+			@endif
 	</div>
 </div>
 

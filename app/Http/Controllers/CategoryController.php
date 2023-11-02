@@ -34,10 +34,10 @@ class CategoryController extends Controller
 	 */
 	public function getItem(Request $request, $name)
 	{
+		global $code_sape;
+
 		if (empty ($name)) abort(404);
-
 		$category = Category::getByName ($name);
-
 		if (empty ($category)) abort(404);
 
 		$posts = Post::getAll($this->countPerPage, $category->id);
@@ -58,6 +58,7 @@ class CategoryController extends Controller
 			->with(compact('title'))
 			->with(compact('posts'))
 			->with(compact('category'))
+			->with(compact('code_sape'))
 			->with(compact('pagination'));
 	}
 }
