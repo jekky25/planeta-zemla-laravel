@@ -6,7 +6,7 @@ class Email {
     public function __construct(){
     }
 
-    public function sendEmail($email_template, $email, $EMAIL, $subject)
+    public static function sendEmail($email_template, $email, $EMAIL, $subject)
     {
 		include_once('../includes/emailer.php');
 	

@@ -12,7 +12,7 @@ class Menu extends Model
 
 	protected $table = 'jos1_menu';
 
-	public function get($menuType = '')
+	public static function get($menuType = '')
 	{
 		$items = self::select('*')
 		->where('menutype', $menuType)
