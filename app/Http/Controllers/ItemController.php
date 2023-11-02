@@ -54,6 +54,8 @@ class ItemController extends Controller
 			}
 		}
 
+		$post->fulltext = \App\Providers\SapeServiceProvider::replaceSapeCode($post->fulltext);
+
 		return view('post')
 		->with(compact('title'))
         ->with(compact('post'));
