@@ -117,7 +117,6 @@ class ItemController extends Controller
 	{
 		$arParams = $request->post();
 		if (empty ($arParams['jtxa'][0])) abort(404);
-		
 		$id = (int) $arParams['jtxa'][0];
 		if ($id == 0) abort(404);
 
@@ -196,7 +195,6 @@ class ItemController extends Controller
 	public function addComment(Request $request)
 	{
 		$arParams = $request->post();
-
 		$rules = [
 			'name' 		=> ['required', 'string', 'max:30'],
 			'email' 	=> ['required', 'email'],
@@ -242,8 +240,7 @@ class ItemController extends Controller
 		curl_close($ch);
 	
 		$recaptcha = json_decode($output);
-
-		if ($recaptcha->success === true && $recaptcha->score >= 0.5) {
+		if ($recaptcha->success === true && $recaptcha->score >= 0.3) {
 		} else {
 			$strError = 'Капча не пройдена';
 			return showErrorMessage($strError, 'comments-form');
