@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://planeta-zemla.ru/'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -177,6 +177,7 @@ return [
         \App\Providers\MetaServiceProvider::class,
         \App\Providers\MenuServiceProvider::class,
         \App\Providers\SapeServiceProvider::class, 
+        \App\Providers\RoutingServiceProvider::class,
 
     ],
 
