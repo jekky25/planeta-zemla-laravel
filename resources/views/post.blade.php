@@ -120,7 +120,7 @@ jcomments.setList('comments-list');
 		<div class="btn" id="comments-form-cancel" style="display:none;"><div><a href="#" tabindex="8" onclick="return false;" title="Отменить">Отменить</a></div></div>
 		<div style="clear:both;"></div>
 	</div>
-		<input type="hidden" name="object_id" value="113">
+		<input type="hidden" name="object_id" value="{{ $post->id }}">
 		<input type="hidden" name="object_group" value="com_content">
 	</form>
 	<script type="text/javascript">
