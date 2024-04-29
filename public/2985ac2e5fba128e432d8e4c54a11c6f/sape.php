@@ -533,13 +533,13 @@ class SAPE_base {
                         $hash = @unserialize($data);
                         if ($hash != false) {
                             // попытаемся записать кодировку в кеш
-                            $hash['__sape_charset__'] = $this->_charset;
-                            $hash['__last_update__'] = time();
-                            $hash['__multi_site__'] = $this->_multi_site;
-                            $hash['__fetch_remote_type__'] = $this->_fetch_remote_type;
-                            $hash['__ignore_case__'] = $this->_ignore_case;
-                            $hash['__php_version__'] = phpversion();
-                            $hash['__server_software__'] = $_SERVER['SERVER_SOFTWARE'];
+                            $hash['__sape_charset__']		= $this->_charset;
+                            $hash['__last_update__']		= time();
+                            $hash['__multi_site__']			= $this->_multi_site;
+                            $hash['__fetch_remote_type__']	= $this->_fetch_remote_type;
+                            $hash['__ignore_case__']		= $this->_ignore_case;
+                            $hash['__php_version__']		= phpversion();
+                            $hash['__server_software__']	= !empty ($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : 'Apache';
 
                             $data_new = @serialize($hash);
                             if ($data_new) {
