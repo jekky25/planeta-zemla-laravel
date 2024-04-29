@@ -26,8 +26,8 @@ class FeedbackController extends Controller
 	}
 
 	/**
-	 * Show the application dashboard.
-	 *
+	 * Show a feedBack page
+     * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
 	public function getFeedBack(Request $request)
@@ -38,6 +38,11 @@ class FeedbackController extends Controller
 		]);
 	}
 
+	/**
+	 * send a message from the feeBack page
+     * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
 	public function sendFeedBack(Request $request)
 	{
 		$arParams = $request->post();

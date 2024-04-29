@@ -12,6 +12,11 @@ class Menu extends Model
 
 	protected $table = 'jos1_menu';
 
+	/**
+	* get menu
+    * @param  string $menuType
+	* @return \Illuminate\Database\Eloquent\Collection 
+	*/
 	public static function get($menuType = '')
 	{
 		$items = self::select('*')

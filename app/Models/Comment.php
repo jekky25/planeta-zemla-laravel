@@ -33,6 +33,12 @@ class Comment extends Model
 
 	public		$timestamps 	= false;
 
+
+	/**
+	* get comment by id
+    * @param  int $id
+	* @return \Illuminate\Database\Eloquent\Collection 
+	*/
 	public static function getById($id)
     {
         $item = self::select('*')
@@ -41,7 +47,9 @@ class Comment extends Model
 
         return $item;
     }
-
+	/**
+    * get votes
+    */
 	public function votes()
     {
 		$ip = request()->ip();

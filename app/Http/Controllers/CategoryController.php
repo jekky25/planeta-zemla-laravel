@@ -28,8 +28,9 @@ class CategoryController extends Controller
 	}
 
 	/**
-	 * Show the application dashboard.
-	 *
+	 * Show an article page in the category
+     * @param  \Illuminate\Http\Request  $request
+     * @param string $name
 	 * @return \Illuminate\Http\Response
 	 */
 	public function getItem(Request $request, $name)

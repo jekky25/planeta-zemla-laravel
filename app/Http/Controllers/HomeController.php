@@ -25,11 +25,11 @@ class HomeController extends Controller
 		// $this->middleware('auth');
 	}
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 	/**
+	 * Show a home page
+     * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
 	public function index(Request $request)
 	{
 		$posts	= Post::getAllHome($this->countPerPage);

@@ -34,10 +34,12 @@ class ItemController extends Controller
 	}
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+	 * Show an article page
+     * @param  \Illuminate\Http\Request  $request
+	 * @param string $name
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
 	public function getItem(Request $request, $name, $id)
 	{
 		$post   = Post::getById($id);
@@ -61,6 +63,13 @@ class ItemController extends Controller
         ->with(compact('post'));
 	}
 
+	/**
+	 * Show rss on the page
+     * @param  \Illuminate\Http\Request  $request
+	 * @param string $name
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
 	public function getRss(Request $request, $name, $id)
 	{
 		$post   = Post::getById($id);
@@ -89,6 +98,11 @@ class ItemController extends Controller
 		->header('Content-Type', 'application/xml');
 	}
 
+	/**
+	 * get ajax requests
+     * @param  \Illuminate\Http\Request  $request
+	 * @return string JSON
+	 */
 	public function getAjax(Request $request)
 	{
 		$arParams = $request->post();
@@ -113,6 +127,11 @@ class ItemController extends Controller
 		return $x;
 	}
 
+	/**
+	 * show commments over ajax on the web page
+     * @param  \Illuminate\Http\Request  $request
+	 * @return string JSON
+	 */
 	public function getComments(Request $request)
 	{
 		$arParams = $request->post();
@@ -192,6 +211,11 @@ class ItemController extends Controller
 		return $x;
 	}
 
+	/**
+	 * add comments to the DB
+     * @param  \Illuminate\Http\Request  $request
+	 * @return string JSON
+	 */
 	public function addComment(Request $request)
 	{
 		$arParams = $request->post();
@@ -269,6 +293,11 @@ class ItemController extends Controller
 
 	}
 
+	/**
+	 * add vote to the DB and show it on the page
+     * @param  \Illuminate\Http\Request  $request
+	 * @return string JSON
+	 */
 	public function setVoteComment(Request $request)
 	{
 		$arParams = $request->post();
