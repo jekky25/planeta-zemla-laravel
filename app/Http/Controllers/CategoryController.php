@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
+use App\Services\LengthPager;
 
 use App\Models\Post;
 use App\Models\Category;
@@ -42,6 +43,7 @@ class CategoryController extends Controller
 		if (empty ($category)) abort(404);
 
 		$posts = Post::getAll($this->countPerPage, $category->id);
+		$posts = LengthPager::makeLengthAware($posts, $posts->total(), $this->countPerPage);
 
 		
 
