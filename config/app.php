@@ -178,6 +178,8 @@ return [
         \App\Providers\MenuServiceProvider::class,
         \App\Providers\SapeServiceProvider::class, 
         \App\Providers\RoutingServiceProvider::class,
+        App\Providers\CategoryServiceProvider::class,
+        App\Providers\PostServiceProvider::class,
 
     ],
 

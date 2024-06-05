@@ -3,19 +3,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\Auth\Authenticatable;
 use App\Services\LengthPager;
-
-use App\Models\Post;
-use App\Models\Category;
+use App\Interfaces\CategoryInterface;
+use App\Interfaces\PostInterface;
+use App\Traits\Pagination;
 
 class CategoryController extends Controller
 {
+	use Pagination;
 	public 	$countPerPage 	= 10;
 
 	/**
@@ -23,9 +19,11 @@ class CategoryController extends Controller
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(
+		protected CategoryInterface $categoryRepository,
+		protected PostInterface $postRepository
+		)
 	{
-		// $this->middleware('auth');
 	}
 
 	/**
@@ -39,29 +37,19 @@ class CategoryController extends Controller
 		global $code_sape;
 
 		if (empty ($name)) abort(404);
-		$category = Category::getByName ($name);
+		$category = $this->categoryRepository->getByName($name);
 		if (empty ($category)) abort(404);
 
-		$posts = Post::getAll($this->countPerPage, $category->id);
-		$posts = LengthPager::makeLengthAware($posts, $posts->total(), $this->countPerPage);
-
-		
-
-		foreach ($posts as &$item)
-			$item['category'] = $category;
-
-		$pagination = $posts->toArray()['links'];
-		$pagination[0] = str_replace (' Previous','', $pagination[0]);
-		$ind = count ($pagination) - 1;
-		$pagination[$ind] = str_replace ('Next ','', $pagination[$ind]);
-
-		$title = $category->title . ' Земля как планета';
+		$posts 			= $this->postRepository->getAll($this->countPerPage, $category->id);
+		$pagination		= $this->getPaginationLinks ($posts);
         
-		return view('home')
-			->with(compact('title'))
-			->with(compact('posts'))
-			->with(compact('category'))
-			->with(compact('code_sape'))
-			->with(compact('pagination'));
+		$data = [
+			'title'			=> $category->title . ' Земля как планета',
+			'posts'			=> $posts,
+			'category'		=> $category,
+			'code_sape'		=> $code_sape,
+			'pagination'	=> $pagination,
+		];
+		return response()->view('home', $data);
 	}
 }
