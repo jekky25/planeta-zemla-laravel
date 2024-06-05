@@ -17,4 +17,14 @@ class CategoryTest extends TestCase
         $response = $this->get($_SERVER['REQUEST_URI']);
         $response->assertStatus(200);
     }
+
+     /**
+     * A basic feature test example.
+     */
+    public function test_item_page(): void
+    {
+        $_SERVER['REQUEST_URI'] = '/vozduh/113-grozi/';
+        $response = $this->get($_SERVER['REQUEST_URI']);
+        $response->assertStatus(200);
+    }
 }
