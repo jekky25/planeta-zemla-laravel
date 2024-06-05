@@ -14,7 +14,7 @@ class PostRepository implements PostInterface {
 	* @param  int $id
 	* @return \Illuminate\Database\Eloquent\Collection 
 	*/	
-	public static function getAll($count = 0, $id = 0)
+	public static function getAll(int $count, int $id)
 	{
 		if ((int) $id == 0) abort(404);
 
