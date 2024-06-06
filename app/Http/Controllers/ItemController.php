@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
+use App\Interfaces\PostInterface;
 
 use App\Models\Post;
 use App\Models\Category;
@@ -19,7 +20,6 @@ use Validator;
 
 class ItemController extends Controller
 {
-	public 	$dateFormat 		= 'd.m.Y H:i';
 	public 	$dateFormatToRss 	= 'D, d M Y H:i:s +0000';
 	public 	$dateFormatForDb	= 'Y-m-d H:i:s';
 	
@@ -28,9 +28,9 @@ class ItemController extends Controller
      *
      * @return void
      */
-	public function __construct()
+	public function __construct(protected PostInterface $postRepository
+	)
 	{
-		// $this->middleware('auth');
 	}
 
     /**
@@ -42,21 +42,11 @@ class ItemController extends Controller
 	 */
 	public function getItem(Request $request, $name, $id)
 	{
-		$post   = Post::getById($id);
+		$post 	= $this->postRepository->getById($id);
+		$post->fulltext =$this->postRepository->getSapeCode($post);
 		if (empty ($post)) abort(404);
 
 		$title = $post->title . ' Земля как планета';
-
-		if (!empty ($post->comments))
-		{
-			foreach ($post->comments as &$item)
-			{
-				$date 		= \Carbon\Carbon::parse($item->date)->format($this->dateFormat);
-				$item->date = $date;
-			}
-		}
-
-		$post->fulltext = \App\Providers\SapeServiceProvider::replaceSapeCode($post->fulltext);
 
 		return view('post')
 		->with(compact('title'))

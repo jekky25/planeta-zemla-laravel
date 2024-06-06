@@ -8,6 +8,13 @@ use App\Models\Post;
 
 class PostRepository implements PostInterface {
 
+	protected $dateFormat 		= 'd.m.Y H:i';
+	protected $voteClass 		= [
+		'0'	 => 'vote-none',
+		'1'	 => 'vote-good',
+		'-1' => 'vote-poor'
+		];
+
     /**
 	* get all articles or all articles for the section
     * @param  int $count
@@ -25,5 +32,72 @@ class PostRepository implements PostInterface {
 			->paginate($count);
 		
 		return LengthPager::makeLengthAware($items, $items->total(), $count);
+	}
+
+	/**
+	* get an article by id
+	* @param  int $id
+	* @return \Illuminate\Database\Eloquent\Collection 
+	*/	
+	public function getById($id)
+    {
+        $item = Post::select('*')
+			->where('ID', $id)
+			->first();
+		$this->setVoteClass($item);
+
+		foreach ($item->comments as &$_item)
+		{
+			$_item 		= $this->getVoteCount($_item, $item);
+			$item->date = $this->getDateFormat($item->date);
+		}
+
+        return $item;
+    }
+
+	/**
+	* set vote class
+	* @param  \App\Models\Post $item
+	* @return void
+	*/	
+	public function setVoteClass(&$item)
+    {
+		$item->voteClass = $this->voteClass;
+	}
+
+	/**
+	* get formate date
+	* @param  string $date
+	* @return string
+	*/
+	public function getDateFormat($date)
+	{
+		return \Carbon\Carbon::parse($date)->format($this->dateFormat);
+	}
+
+
+	/**
+	* replace text to the text with a sape code
+	* @param  \App\Models\Post $post
+	* @return string
+	*/
+	public function getSapeCode($post)
+	{
+		return \App\Providers\SapeServiceProvider::replaceSapeCode($post->fulltext);
+	}
+	
+	/**
+	* get count of the votes for the comment
+	* @param  \App\Models\Comment $_item
+	* @param  \App\Models\Post $item
+	* @return \App\Models\Post 
+	*/	
+	public static function getVoteCount($_item, $item)
+    {
+		$_item->voteClass = $item->voteClass[0];
+		if ($_item['isgood'] > $_item['ispoor']) $_item->voteClass = $item->voteClass[1];
+		if ($_item['isgood'] < $_item['ispoor']) $_item->voteClass = $item->voteClass[-1];
+		$_item['voteCount'] =  $_item['isgood'] - $_item['ispoor'];
+		return ($_item);
 	}
 }

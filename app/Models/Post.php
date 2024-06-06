@@ -79,7 +79,6 @@ class Post extends Model
 			if ($_item['isgood'] < $_item['ispoor']) $_item->voteClass = $item->voteClass[-1];
 			$_item['voteCount'] =  $_item['isgood'] - $_item['ispoor'];
 		}
-
         return $item;
     }
 
