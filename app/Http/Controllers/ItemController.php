@@ -42,8 +42,8 @@ class ItemController extends Controller
 	 */
 	public function getItem(Request $request, $name, $id)
 	{
-		$post 	= $this->postRepository->getById($id);
-		$post->fulltext =$this->postRepository->getSapeCode($post);
+		$post 			= $this->postRepository->getById($id);
+		$post->fulltext = $this->postRepository->getSapeCode($post);
 		if (empty ($post)) abort(404);
 
 		$title = $post->title . ' Земля как планета';
