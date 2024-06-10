@@ -46,11 +46,11 @@ class ItemController extends Controller
 		$post->fulltext = $this->postRepository->getSapeCode($post);
 		if (empty ($post)) abort(404);
 
-		$title = $post->title . ' Земля как планета';
-
-		return view('post')
-		->with(compact('title'))
-        ->with(compact('post'));
+		$data = [
+			'title'			=> $post->title . ' Земля как планета',
+			'post'			=> $post
+		];
+		return response()->view('post', $data);
 	}
 
 	/**
