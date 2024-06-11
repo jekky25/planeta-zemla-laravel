@@ -62,29 +62,15 @@ class ItemController extends Controller
 	 */
 	public function getRss(Request $request, $name, $id)
 	{
-		$post   = Post::getById($id);
-
+		$post 	= $this->postRepository->getById($id);
 		if (empty ($post)) abort(404);
-
-		$startStr = '<?xml version="1.0" encoding="utf-8"?>';
-
-		$mTime = \Carbon\Carbon::now();
-		$refreshTime = $mTime->format($this->dateFormatToRss);
-
-		foreach ($post->comments as &$item)
-		{
-			$mTime = \Carbon\Carbon::create($item->date);
-			$postTime = $mTime->format($this->dateFormatToRss);
-
-			$item->dateStr = $postTime;
-		}
+		$data = [
+			'post'			=> $post,
+			'refreshTime'	=> $this->postRepository->getDateFormatToRss(\Carbon\Carbon::now())
+		];
 
 		return response()
-		->view ('post.rss', [
-			'startStr'		=> $startStr,
-			'post'			=> $post,
-			'refreshTime'	=> $refreshTime
-		])
+		->view ('post.rss', $data)
 		->header('Content-Type', 'application/xml');
 	}
 

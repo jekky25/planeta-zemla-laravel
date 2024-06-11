@@ -9,6 +9,7 @@ use App\Models\Post;
 class PostRepository implements PostInterface {
 
 	protected $dateFormat 		= 'd.m.Y H:i';
+	protected $dateFormatToRss	= 'D, d M Y H:i:s +0000';
 	protected $voteClass 		= [
 		'0'	 => 'vote-none',
 		'1'	 => 'vote-good',
@@ -48,8 +49,9 @@ class PostRepository implements PostInterface {
 
 		foreach ($item->comments as &$_item)
 		{
-			$_item 		= $this->getVoteCount($_item, $item);
-			$item->date = $this->getDateFormat($item->date);
+			$_item 			= $this->getVoteCount($_item, $item);
+			$_item->date 	= $this->getDateFormat($_item->date);
+			$_item->dateStr = $this->getDateFormatToRss($_item->date);
 		}
 
         return $item;
@@ -75,6 +77,15 @@ class PostRepository implements PostInterface {
 		return \Carbon\Carbon::parse($date)->format($this->dateFormat);
 	}
 
+	/**
+	* get formate date to Rss
+	* @param  string $date
+	* @return string
+	*/
+	public function getDateFormatToRss($date)
+	{
+		return \Carbon\Carbon::create($date)->format($this->dateFormatToRss);
+	}
 
 	/**
 	* replace text to the text with a sape code
