@@ -17,22 +17,8 @@ class AddCommentAction
 	*/
 	public static function handle (AddCommentRequest $request)
 	{
-		$arParams = $request->post();
-		$rules = [
-			'name' 		=> ['required', 'string', 'max:30'],
-			'email' 	=> ['required', 'email'],
-			'comment' 	=> ['required', 'max:1000']
-		];
-
-		$errMessages = ['name.required' 	=> 'Поле Имя не заполнено',
-						'name.max' 			=> 'Поле Имя должно быть не более :max символов',
-						'email.required' 	=> 'Поле Емайл не заполнено',
-						'email.email' 		=> 'Поле Емайл заполнено не корректно',
-						'comment.required' 	=> 'Комментарий не заполнен',
-						'comment.max'	 	=> 'Ваш комментарий слишком длинный',
-		];
-
-		$validator = Validator::make($arParams, $rules, $errMessages);
+		$arParams = $request->all();
+		$validator = Validator::make($arParams, $request->rules(), $request->messages());
 
 		if ($validator->fails()) {
 			$messages = $validator->messages();

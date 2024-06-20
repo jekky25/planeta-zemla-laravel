@@ -27,10 +27,11 @@ class ItemController extends Controller
      */
 	public function __construct(
 		protected PostInterface $postRepository, 
-		protected AddCommentRequest $requestAdd,
+//		protected AddCommentRequest $requestAdd,
 		protected VoteCommentRequest $requestVote
 	)
 	{
+
 	}
 
     /**
@@ -92,7 +93,7 @@ class ItemController extends Controller
 				$x = SetVoteCommentAction::handle($this->requestVote);
 				break;
 			case 'JCommentsAddComment':
-				$x = AddCommentAction::handle($this->requestAdd);
+				$x = AddCommentAction::handle(new AddCommentRequest($arParams));
 				break;
 			default:
 			abort(404);
