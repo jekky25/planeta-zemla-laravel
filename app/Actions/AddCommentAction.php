@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Requests\AddCommentRequest;
+use App\Services\JsonService;
 use App\Models\Comment;
 use Validator;
 
@@ -24,7 +25,7 @@ class AddCommentAction
 			$messages = $validator->messages();
 			foreach ($messages->toArray() as $n => $mess)
 			{
-				return showErrorMessage($mess, 'comments-form');
+				return JsonService::showErrorMessage($mess, 'comments-form');
 				break;
 			}
 		}
@@ -52,7 +53,7 @@ class AddCommentAction
 		if ($recaptcha->success === true && $recaptcha->score >= 0.3) {
 		} else {
 			$strError = 'Капча не пройдена';
-			return showErrorMessage($strError, 'comments-form');
+			return JsonService::showErrorMessage($strError, 'comments-form');
 		}
 
 		$ip 		= request()->ip();
