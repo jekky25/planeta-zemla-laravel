@@ -27,7 +27,6 @@ class ItemController extends Controller
      */
 	public function __construct(
 		protected PostInterface $postRepository, 
-//		protected AddCommentRequest $requestAdd,
 		protected VoteCommentRequest $requestVote
 	)
 	{
