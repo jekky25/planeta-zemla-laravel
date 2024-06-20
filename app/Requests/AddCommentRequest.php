@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 
 class AddCommentRequest extends FormRequest
 {
-	public function rules()
+	/**
+	* rules for the request
+	* @return string array
+	*/
+	public function rules():array
 	{
 		return [
             'name' 		=> ['required', 'string', 'max:30'],
@@ -17,6 +21,10 @@ class AddCommentRequest extends FormRequest
         ];
 	}
 
+	/**
+	* messages for the request
+	* @return string array
+	*/
 	public function messages():array
 	{
 		return  [
