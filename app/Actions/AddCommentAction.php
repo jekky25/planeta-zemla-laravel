@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Requests\AddCommentRequest;
 use App\Services\JsonService;
+use App\Services\GoogleCaptchaService;
 use App\Models\Comment;
 use Validator;
 
@@ -30,32 +31,14 @@ class AddCommentAction
 			}
 		}
 
-		$recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-		$recaptcha_secret = RE_SEC_KEY;
-		$recaptcha_response = $arParams['recaptcha_response'];
+		$captcha 	= new GoogleCaptchaService($arParams['recaptcha_response']);
+		$captcha->check();
 
-		$ch = curl_init();
-		curl_setopt_array($ch, [
-			CURLOPT_URL => $recaptcha_url,
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => [
-			'secret' => $recaptcha_secret,
-			'response' => $recaptcha_response,
-			'remoteip' => $_SERVER['REMOTE_ADDR']
-		   ],
-		   CURLOPT_RETURNTRANSFER => true
-		  ]);
-	
-		$output = curl_exec($ch);
-		curl_close($ch);
-	
-		$recaptcha = json_decode($output);
-		if ($recaptcha->success === true && $recaptcha->score >= 0.3) {
-		} else {
-			$strError = 'Капча не пройдена';
-			return JsonService::showErrorMessage($strError, 'comments-form');
+		if ($captcha->hasError())
+		{
+			return JsonService::showErrorMessage($captcha->getErrorMessage(), 'comments-form');
 		}
-
+	
 		$ip 		= request()->ip();
 		$date 		= \Carbon\Carbon::parse()->format(self::$dateFormatForDb);
 
