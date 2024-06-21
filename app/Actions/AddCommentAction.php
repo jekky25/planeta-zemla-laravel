@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Requests\AddCommentRequest;
 use App\Services\JsonService;
 use App\Services\GoogleCaptchaService;
+use App\Repositories\CommentRepository;
 use App\Models\Comment;
 use Validator;
 
@@ -41,7 +42,6 @@ class AddCommentAction
 	
 		$ip 		= request()->ip();
 		$date 		= \Carbon\Carbon::parse()->format(self::$dateFormatForDb);
-
 		$aFields = [
 			'lang'				=> 'ru-RU',
 			'comment'		 	=> $arParams['comment'],
@@ -52,12 +52,14 @@ class AddCommentAction
 			'email'		 		=> $arParams['email'],
 			'ip'	 			=> $ip,
 		];
+		try {
+			$commentRepository = new CommentRepository();
+			$commentRepository->create($aFields);
 
-
-		$oComment = new Comment ($aFields);
-		$oComment->save();
-
-		$mess = 'Спасибо за комментарий. Он будет опубликован после проверки модератором';
-		return JsonService::showInfoMessage($mess, 'comments-form');
+			$mess = 'Спасибо за комментарий. Он будет опубликован после проверки модератором';
+			return JsonService::showInfoMessage($mess, 'comments-form');
+        } catch (\Exception $e) {
+            return back()->withError($e->getMessage());
+        }
 	}
 }
