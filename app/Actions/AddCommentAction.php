@@ -58,6 +58,6 @@ class AddCommentAction
 		$oComment->save();
 
 		$mess = 'Спасибо за комментарий. Он будет опубликован после проверки модератором';
-		return showInfoMessage($mess, 'comments-form');
+		return JsonService::showInfoMessage($mess, 'comments-form');
 	}
 }
