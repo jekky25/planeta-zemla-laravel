@@ -43,46 +43,6 @@ class Post extends Model
     }
 	
 	/**
-	* get all articles or all articles for the section
-    * @param  int $count
-	* @param  int $id
-	* @return \Illuminate\Database\Eloquent\Collection 
-	*/	
-	public static function getAll($count = 0, $id = 0)
-    {
-		if ((int) $id == 0) abort(404);
-
-        $items = self::select('*')
-			->where('state', '>', '0')
-			->where('sectionid', $id)
-			->orderBy('ordering', 'asc')
-			->paginate($count);
-
-        return $items;
-    }
-
-	/**
-	* get an article by id
-	* @param  int $id
-	* @return \Illuminate\Database\Eloquent\Collection 
-	*/	
-	public static function getById($id)
-    {
-        $item = self::select('*')
-			->where('ID', $id)
-			->first();
-
-		foreach ($item->comments as &$_item)
-		{
-			$_item->voteClass = $item->voteClass[0];
-			if ($_item['isgood'] > $_item['ispoor']) $_item->voteClass = $item->voteClass[1];
-			if ($_item['isgood'] < $_item['ispoor']) $_item->voteClass = $item->voteClass[-1];
-			$_item['voteCount'] =  $_item['isgood'] - $_item['ispoor'];
-		}
-        return $item;
-    }
-
-	/**
     * get post for the home page
     */		
 	public function postsFrontend()

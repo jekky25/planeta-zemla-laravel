@@ -33,20 +33,6 @@ class Comment extends Model
 
 	public		$timestamps 	= false;
 
-
-	/**
-	* get comment by id
-    * @param  int $id
-	* @return \Illuminate\Database\Eloquent\Collection 
-	*/
-	public static function getById($id)
-    {
-        $item = self::select('*')
-			->where('id', $id)
-			->first();
-
-        return $item;
-    }
 	/**
     * get votes
     */
