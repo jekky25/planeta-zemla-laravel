@@ -180,6 +180,7 @@ return [
         \App\Providers\RoutingServiceProvider::class,
         App\Providers\CategoryServiceProvider::class,
         App\Providers\PostServiceProvider::class,
+        App\Providers\VoteServiceProvider::class,
 
     ],
 

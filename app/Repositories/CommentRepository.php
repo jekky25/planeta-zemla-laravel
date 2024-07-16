@@ -19,4 +19,19 @@ class CommentRepository implements CommentInterface {
             throw new \Exception('Failed to create a comment '.$e->getMessage());
         }
     }
+
+
+    /**
+	* get comment by id
+    * @param  int $id
+	* @return \Illuminate\Database\Eloquent\Collection 
+	*/
+	public static function getById($id)
+    {
+        $item = Comment::select('*')
+			->where('id', $id)
+			->first();
+
+        return $item;
+    }
 }

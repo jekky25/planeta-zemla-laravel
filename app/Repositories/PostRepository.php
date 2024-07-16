@@ -68,6 +68,16 @@ class PostRepository implements PostInterface {
 	}
 
 	/**
+    * get vote class
+
+	* @return array
+    */
+	public function getVoteClass()
+	{
+		return $this->voteClass;
+	}
+
+	/**
 	* get formate date
 	* @param  string $date
 	* @return string

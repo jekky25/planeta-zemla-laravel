@@ -3,6 +3,9 @@
 namespace App\Actions;
 
 use App\Requests\VoteCommentRequest;
+use App\Repositories\CommentRepository;
+use App\Repositories\VoteRepository;
+use App\Repositories\PostRepository;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Vote;
@@ -27,10 +30,10 @@ class SetVoteCommentAction
 
 		$vote	= $vote == 1 ? $vote : '-1';
 
-		$comment = Comment::getById($id);
+		$comment = CommentRepository::getById($id);
 		if (count ($comment->votes) > 0) abort(404);
 
-		$ip = request()->ip();
+		$ip = $request->ip();
 		$date 		= \Carbon\Carbon::parse()->format(self::$dateFormatForDb);
 
 		$aFields = [
@@ -41,28 +44,24 @@ class SetVoteCommentAction
 			'value' 	=> $vote
 		];
 
-		$oVote = new Vote ($aFields);
-		$oVote->save();
+		$oVoteRepository = new VoteRepository($aFields);
+		$oVoteRepository->create($aFields);
 
 		if ($vote == '1')
-			$comment->isgood = $comment->isgood + 1;
+			$comment->isgood++;
 		else
-			$comment->ispoor = $comment->ispoor + 1;
+			$comment->ispoor++;
 
 		$comment->save();
 
-		$oPost 		= new Post();
-		$voteClass 	= $oPost->getVoteClass();
-		
-		$comment->voteClassOut = $voteClass[0];
-		if ($comment['isgood'] > $comment['ispoor']) $comment->voteClassOut = $voteClass[1];
-		if ($comment['isgood'] < $comment['ispoor']) $comment->voteClassOut = $voteClass[-1];
-		$comment['voteCount'] =  $comment['isgood'] - $comment['ispoor'];
-
+		$oPost 					= new PostRepository();
+		$voteClass 				= $oPost->getVoteClass();
+		$comment->voteClassOut 	= $comment['isgood'] > $comment['ispoor'] 		? $voteClass[1] 		: $voteClass[0];
+		$comment->voteClassOut 	= $comment['isgood'] < $comment['ispoor'] 		? $voteClass[-1] 		: $comment->voteClassOut;
+		$comment['voteCount'] 	= $comment['isgood'] - $comment['ispoor'];
 
 		$str = '<span class="' . $comment->voteClassOut . '">' . $comment->voteCount . '</span>';
 		$str = str_replace(["\r", "\n"], '', $str);
-
 		$y = "jcomments.updateVote('" . $id . "','" . $str . "');";
 
 		$arX = [
