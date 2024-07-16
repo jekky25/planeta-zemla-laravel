@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Requests\AddCommentRequest;
+use App\Requests\GetCommentRequest;
 use App\Requests\VoteCommentRequest;
 use App\Http\Controllers\Controller;
 use App\Actions\AddCommentAction;
@@ -86,7 +87,7 @@ class ItemController extends Controller
 		$act 		= $arParams['jtxf'];
 		switch ($act) {
 			case 'JCommentsShowPage':
-				$x = GetCommentsAction::handle($request);
+				$x = GetCommentsAction::handle(new GetCommentRequest($arParams));
 				break;
 			case 'JCommentsVoteComment':
 				$x = SetVoteCommentAction::handle($this->requestVote);

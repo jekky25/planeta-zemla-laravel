@@ -3,6 +3,8 @@
 namespace App\Actions;
 
 use Illuminate\Http\Request;
+use App\Requests\GetCommentRequest;
+use App\Repositories\PostRepository;
 use App\Models\Post;
 
 class GetCommentsAction
@@ -12,14 +14,14 @@ class GetCommentsAction
      * @param  \Illuminate\Http\Request  $request
 	 * @return string JSON
 	 */
-	public static function handle(Request $request)
+	public static function handle(GetCommentRequest $request)
 	{
-		$arParams = $request->post();
+		$arParams = $request;
 		if (empty ($arParams['jtxa'][0])) abort(404);
 		$id = (int) $arParams['jtxa'][0];
 		if ($id == 0) abort(404);
 
-		$post   = Post::getById($id);
+		$post   = (new PostRepository())->getById($id);
 		$str = '
 		<h4>Комментарии
 			<a class="rss" href="' . route('comment_rss',[$post->category['alias'], $post->id,$post->alias]) . '" title="RSS лента комментариев этой записи" target="_blank">&nbsp;</a>
