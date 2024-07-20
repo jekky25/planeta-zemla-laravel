@@ -35,9 +35,9 @@ class HomeController extends Controller
 	public function index(Request $request)
 	{
 		$posts	= $this->postRepository->getAllHome($this->countPerPage);
-		return view('home')
-			->with(compact('posts'));
-
-
+		$data = [
+			'posts'			=> $posts,
+		];
+		return view('home', $data);
 	}
 }
