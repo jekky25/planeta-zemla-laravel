@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use App\Interfaces\PostInterface;
 use App\Services\LengthPager;
 use App\Models\Post;
@@ -55,6 +56,29 @@ class PostRepository implements PostInterface {
 		}
 
         return $item;
+    }
+
+		/**
+	* get articles for the main page
+    * @param  int $count
+	* @return \Illuminate\Database\Eloquent\Collection 
+	*/		
+	public static function getAllHome($count = 0)
+    {
+		$items = Post::select('*')
+			->where('state', '>', '0')
+            ->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                      ->from('jos1_content_frontpage')
+                      ->whereRaw('jos1_content.id = jos1_content_frontpage.content_id');
+            })
+			->with('category')
+			->orderBy('ordering', 'asc')
+            ->get();
+
+
+
+        return $items;
     }
 
 	/**

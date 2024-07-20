@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
+use App\Interfaces\PostInterface;
 
 use App\Models\Post;
 
@@ -20,9 +21,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-	public function __construct()
+	public function __construct(
+		protected PostInterface $postRepository
+	)
 	{
-		// $this->middleware('auth');
 	}
 
  	/**
@@ -32,8 +34,7 @@ class HomeController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$posts	= Post::getAllHome($this->countPerPage);
-
+		$posts	= $this->postRepository->getAllHome($this->countPerPage);
 		return view('home')
 			->with(compact('posts'));
 
