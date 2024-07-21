@@ -71,11 +71,6 @@ class FeedbackController extends Controller
 
 		if (!empty ($arParams['email_copy']) && $arParams['email_copy'] == 1)
 		{
-			$EMAIL['NAME'] 		= $arParams['name'];
-			$EMAIL['EMAIL'] 	= $arParams['email'];
-			$EMAIL['SUBJECT'] 	= $arParams['subject'];
-			$EMAIL['TEXT'] 		= $arParams['text'];
-
 			Email::sendEmail($email_template, $arParams['email'], $EMAIL, 'Сообщение через обратную связь www.planeta-zemla.ru');
 
 		}
