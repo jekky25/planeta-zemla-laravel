@@ -6,7 +6,8 @@ use App\Services\JsonService;
 class GoogleCaptchaService
 {
 	private $url			= 'https://www.google.com/recaptcha/api/siteverify';
-	private $secret			= RE_SEC_KEY;
+	private $secret			= '6LfD7VYkAAAAADvURBFXjV0Pjc1dxL_8NLt1RN47';
+	private static $siteKey	= '6LfD7VYkAAAAAC38VoG0yb2jeedEnV276kMTuwTb';
 	private $output;
 	private $remoteip		= '127.0.0.1';
 	private $response;
@@ -33,6 +34,15 @@ class GoogleCaptchaService
 		$this->send();
 		$this->decode();
 		$this->checkAnswer();
+	}
+
+	/**
+	* get site key
+	* 
+	*/
+	public static function getSiteKey() :string
+	{
+		return self::$siteKey;
 	}
 
 	/**
