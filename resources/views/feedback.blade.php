@@ -5,11 +5,11 @@
 <div class="componentheading">
 			</div>
 @push('scripts')
-<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render={{\App\Services\GoogleCaptchaService::getSiteKey()}}"></script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render={{GoogleCaptchaService::getSiteKey()}}"></script>
 @endpush
 <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('{{\App\Services\GoogleCaptchaService::getSiteKey()}}', { action: 'contact' }).then(function (token) {
+            grecaptcha.execute('{{GoogleCaptchaService::getSiteKey()}}', { action: 'contact' }).then(function (token) {
                 var recaptchaResponse = document.getElementById('recaptchaResponse');
                 recaptchaResponse.value = token;
             });
