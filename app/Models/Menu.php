@@ -14,7 +14,7 @@ class Menu extends Model
 
 	/**
 	* get menu
-    * @param  string $menuType
+	* @param  string $menuType
 	* @return \Illuminate\Database\Eloquent\Collection 
 	*/
 	public static function get($menuType = '')
@@ -24,7 +24,6 @@ class Menu extends Model
 		->where('published', '>', '0')
 		->orderBy('ordering', 'asc')
 		->get();
-
    
 		return $items;
 	}

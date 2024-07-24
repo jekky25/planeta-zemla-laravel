@@ -21,7 +21,7 @@ class Comment extends Model
 		'username',
 		'email',
 		'ip'
-	  ];
+	];
 
 	protected	$attributes = [
 		'comment' 			=> '',
@@ -29,17 +29,16 @@ class Comment extends Model
 		'checked_out_time' 	=> '1970-01-01 00:00:00',
 		'object_group' 		=> 'com_content',
 		'object_params'		=> ''
-    ];
+	];
 
 	public		$timestamps 	= false;
 
 	/**
-    * get votes
-    */
+	* get votes
+	*/
 	public function votes()
-    {
+	{
 		$ip = request()->ip();
-		
-        return $this->hasMany(Vote::class, 'commentid', 'id')->where('ip', $ip);
-    }	
+		return $this->hasMany(Vote::class, 'commentid', 'id')->where('ip', $ip);
+	}	
 }
