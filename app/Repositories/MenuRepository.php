@@ -14,10 +14,10 @@ class MenuRepository implements MenuInterface {
 	public static function get($menuType = '')
 	{
 		$items = Menu::select('*')
-		->where('menutype', $menuType)
-		->where('published', '>', '0')
-		->orderBy('ordering', 'asc')
-		->get();
-   		return $items;
+			->where('menutype', $menuType)
+			->where('published', '>', '0')
+			->orderBy('ordering', 'asc')
+			->get();
+		return $items;
 	}
 }

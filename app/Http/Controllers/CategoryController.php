@@ -15,23 +15,22 @@ class CategoryController extends Controller
 	public 	$countPerPage 	= 10;
 
 	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
+	* Create a new controller instance.
+	*
+	* @return void
+	*/
 	public function __construct(
 		protected CategoryInterface $categoryRepository,
-		protected PostInterface $postRepository
-		)
+		protected PostInterface $postRepository)
 	{
 	}
 
 	/**
-	 * Show an article page in the category
-     * @param  \Illuminate\Http\Request  $request
-     * @param string $name
-	 * @return \Illuminate\Http\Response
-	 */
+	* Show an article page in the category
+	* @param  \Illuminate\Http\Request  $request
+	* @param string $name
+	* @return \Illuminate\Http\Response
+	*/
 	public function getItem(Request $request, $name)
 	{
 		global $code_sape;
@@ -42,7 +41,7 @@ class CategoryController extends Controller
 
 		$posts 			= $this->postRepository->getAll($this->countPerPage, $category->id);
 		$pagination		= $this->getPaginationLinks ($posts);
-        
+
 		$data = [
 			'title'			=> $category->title . ' Земля как планета',
 			'posts'			=> $posts,

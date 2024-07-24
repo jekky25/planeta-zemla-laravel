@@ -16,7 +16,6 @@ class GoogleCaptchaService
 	private $success	 	= false;
 	private $error		 	= false;
 	private $errorMessage 	= '';
-	
 
 	public function __construct ($response)
 	{
@@ -25,10 +24,10 @@ class GoogleCaptchaService
 	}
 
 	/**
-     * check google captcha in diferent classes
-     * 
-     * @return void
-     */
+	* check google captcha in diferent classes
+	* 
+	* @return void
+	*/
 	public function check()
 	{
 		$this->send();
@@ -46,64 +45,63 @@ class GoogleCaptchaService
 	}
 
 	/**
-     * set success in true or false
-	 * 
-	 * @param bool $val
-     * 
-     * @return void
-     */
+	* set success in true or false
+	* 
+	* @param bool $val
+	* @return void
+	*/
 	public function setSuccess($val)
 	{
 		$this->success = $val == true ? true : false;
 	}
 
 	/**
-     * set error in true if the captha is not passed
-	 * 
-	 * @param bool $val
-     * @return void
-     */
+	* set error in true if the captha is not passed
+	* 
+	* @param bool $val
+	* @return void
+	*/
 	public function setError($val)
 	{
 		$this->error = $val == true ? true : false;
 	}
 
 	/**
-     * set error message
-	 * 
-	 * @param string $message
-     * @return void
-     */
+	* set error message
+	* 
+	* @param string $message
+	* @return void
+	*/
 	public function setErrorMessage($message)
 	{
 		$this->errorMessage = !empty ($message) ? $message : '';
 	}
 
 	/**
-     * check errors
-	 * 
-     * @return bool
-     */
+	* check errors
+	* 
+	* @return bool
+	*/
 	public function hasError()
 	{
 		return $this->error;
 	}
 
 	/**
-     * get error message
-	 * 
-     * @return string
-     */
+	* get error message
+	* 
+	* @return string
+	*/
 	public function getErrorMessage()
 	{
 		return $this->errorMessage;
 	}
 
 	/**
-     * send a request to the google website and get a response
-	 * 
-     * @return void
-     */
+	* send a request to the google website and get a response
+	* 
+	* @return void
+	*/
 	private function send ()
 	{
 		$ch = curl_init();
@@ -114,29 +112,29 @@ class GoogleCaptchaService
 				'secret' 	=> $this->secret,
 				'response' 	=> $this->response,
 				'remoteip' 	=> $this->remoteip
-		   ],
-		   CURLOPT_RETURNTRANSFER => true
-		  ]);
+			],
+			CURLOPT_RETURNTRANSFER => true
+		]);
 	
 		$this->output = curl_exec($ch);
 		curl_close($ch);
 	}
 
 	/**
-     * decode a response from json
-	 * 
-     * @return void
-     */
+	* decode a response from json
+	* 
+	* @return void
+	*/
 	private function decode ()
 	{
 		$this->recaptcha = json_decode($this->output);
 	}
 
 	/**
-     * check respond 
-	 * 
-     * @return void
-     */
+	* check respond 
+	* 
+	* @return void
+	*/
 	private function checkAnswer ()
 	{	
 		$recaptcha = $this->recaptcha;

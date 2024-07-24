@@ -8,23 +8,22 @@ use App\Interfaces\PostInterface;
 
 class PostServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->app->bind(PostInterface::class, PostRepository::class);
-    }
+	/**
+	* Register services.
+	*
+	* @return void
+	*/
+	public function register()
+	{
+		$this->app->bind(PostInterface::class, PostRepository::class);
+	}
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
+	/**
+	* Bootstrap services.
+	*
+	* @return void
+	*/
+	public function boot()
+	{
+	}
 }

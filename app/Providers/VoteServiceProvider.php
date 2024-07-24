@@ -8,23 +8,23 @@ use App\Interfaces\VoteInterface;
 
 class VoteServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->app->bind(VoteInterface::class, VoteRepository::class);
-    }
+	/**
+	* Register services.
+	*
+	* @return void
+	*/
+	public function register()
+	{
+	$this->app->bind(VoteInterface::class, VoteRepository::class);
+	}
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
+	/**
+	* Bootstrap services.
+	*
+	* @return void
+	*/
+	public function boot()
+	{
+		//
+	}
 }

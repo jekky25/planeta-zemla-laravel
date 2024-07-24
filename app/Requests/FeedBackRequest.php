@@ -19,7 +19,7 @@ class FeedBackRequest extends FormRequest
 			'email' 	=> ['required', 'email'],
 			'subject'	=> ['required', 'max:300'],
 			'text'	 	=> ['required', 'max:1000']
-        ];
+		];
 	}
 
 	/**

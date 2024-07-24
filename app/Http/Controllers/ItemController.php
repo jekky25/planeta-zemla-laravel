@@ -21,26 +21,24 @@ use Validator;
 
 class ItemController extends Controller
 {
-     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+	/**
+	* Create a new controller instance.
+	*
+	* @return void
+	*/
 	public function __construct(
 		protected PostInterface $postRepository, 
-		protected VoteCommentRequest $requestVote
-	)
+		protected VoteCommentRequest $requestVote)
 	{
-
 	}
 
-    /**
-	 * Show an article page
-     * @param  \Illuminate\Http\Request  $request
-	 * @param string $name
-	 * @param int $id
-	 * @return \Illuminate\Http\Response
-	 */
+	/**
+	* Show an article page
+	* @param  \Illuminate\Http\Request  $request
+	* @param string $name
+	* @param int $id
+	* @return \Illuminate\Http\Response
+	*/
 	public function getItem(Request $request, $name, $id)
 	{
 		$post 			= $this->postRepository->getById($id);
@@ -55,12 +53,12 @@ class ItemController extends Controller
 	}
 
 	/**
-	 * Show rss on the page
-     * @param  \Illuminate\Http\Request  $request
-	 * @param string $name
-	 * @param int $id
-	 * @return \Illuminate\Http\Response
-	 */
+	* Show rss on the page
+	* @param  \Illuminate\Http\Request  $request
+	* @param string $name
+	* @param int $id
+	* @return \Illuminate\Http\Response
+	*/
 	public function getRss(Request $request, $name, $id)
 	{
 		$post 	= $this->postRepository->getById($id);
@@ -76,10 +74,10 @@ class ItemController extends Controller
 	}
 
 	/**
-	 * get ajax requests
-     * @param  \Illuminate\Http\Request  $request
-	 * @return string JSON
-	 */
+	* get ajax requests
+	* @param  \Illuminate\Http\Request  $request
+	* @return string JSON
+	*/
 	public function getAjax(Request $request)
 	{
 		$arParams 	= $request->post();

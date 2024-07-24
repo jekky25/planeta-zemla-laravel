@@ -8,23 +8,22 @@ use App\Interfaces\CategoryInterface;
 
 class CategoryServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->app->bind(CategoryInterface::class, CategoryRepository::class);
-    }
+	/**
+	* Register services.
+	*
+	* @return void
+	*/
+	public function register()
+	{
+		$this->app->bind(CategoryInterface::class, CategoryRepository::class);
+	}
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
+	/**
+	* Bootstrap services.
+	*
+	* @return void
+	*/
+	public function boot()
+	{
+	}
 }

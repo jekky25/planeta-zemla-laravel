@@ -4,11 +4,11 @@ namespace App\Traits;
 
 trait Pagination {
 
-	 /**
-     * Get paginnation array with links
-     * @param  App\Models\Item  $items
-     * @return array
-     */
+	/**
+	* Get paginnation array with links
+	* @param  App\Models\Item  $items
+	* @return array
+	*/
 	public function getPaginationLinks ($items)
 	{
 		$pagination = $items->toArray()['links'];

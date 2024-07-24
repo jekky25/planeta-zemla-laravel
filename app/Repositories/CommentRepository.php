@@ -7,31 +7,30 @@ use App\Models\Comment;
 
 class CommentRepository implements CommentInterface {
 
-    /**
+	/**
 	* create a comment
 	* @param  array $request
 	* @return void
 	*/	
-    public function create($request) {
-        try {
-            Comment::create($request);
-        } catch (\Exception $e) {
-            throw new \Exception('Failed to create a comment '.$e->getMessage());
-        }
-    }
+	public function create($request) {
+		try {
+			Comment::create($request);
+		} catch (\Exception $e) {
+			throw new \Exception('Failed to create a comment '.$e->getMessage());
+		}
+	}
 
-
-    /**
+	/**
 	* get comment by id
-    * @param  int $id
+	* @param  int $id
 	* @return \Illuminate\Database\Eloquent\Collection 
 	*/
 	public static function getById($id)
-    {
-        $item = Comment::select('*')
+	{
+		$item = Comment::select('*')
 			->where('id', $id)
 			->first();
 
-        return $item;
-    }
+		return $item;
+	}
 }

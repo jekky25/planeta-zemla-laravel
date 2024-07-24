@@ -18,19 +18,19 @@ use App\Helpers\Email;
 class FeedbackController extends Controller
 {
 	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
+	* Create a new controller instance.
+	*
+	* @return void
+	*/
 	public function __construct()
 	{
 	}
 
 	/**
-	 * Show a feedBack page
-     * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
-	 */
+	* Show a feedBack page
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
 	public function getFeedBack(Request $request)
 	{
 		$title = 'Обратная связь, Земля как планета';
@@ -40,10 +40,10 @@ class FeedbackController extends Controller
 	}
 
 	/**
-	 * send a message from the feeBack page
-     * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
-	 */
+	* send a message from the feeBack page
+	* @param  \Illuminate\Http\Request  $request
+	* @return \Illuminate\Http\Response
+	*/
 	public function sendFeedBack(FeedBackRequest $request)
 	{
 		$arParams	= $request->post();
@@ -58,7 +58,6 @@ class FeedbackController extends Controller
 						->withErrors($strError)
 						->withInput();
 		}
-
 
 		$email_template = 'feedback';
 
@@ -78,4 +77,3 @@ class FeedbackController extends Controller
 		return back()->with('success', 'Ваше сообщение было успешно отправлено!');
 	}
 }
-

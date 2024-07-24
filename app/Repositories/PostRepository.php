@@ -17,9 +17,9 @@ class PostRepository implements PostInterface {
 		'-1' => 'vote-poor'
 		];
 
-    /**
+	/**
 	* get all articles or all articles for the section
-    * @param  int $count
+	* @param  int $count
 	* @param  int $id
 	* @return \Illuminate\Database\Eloquent\Collection 
 	*/	
@@ -32,7 +32,6 @@ class PostRepository implements PostInterface {
 			->where('sectionid', $id)
 			->orderBy('ordering', 'asc')
 			->paginate($count);
-		
 		return LengthPager::makeLengthAware($items, $items->total(), $count);
 	}
 
@@ -42,8 +41,8 @@ class PostRepository implements PostInterface {
 	* @return \Illuminate\Database\Eloquent\Collection 
 	*/	
 	public function getById($id)
-    {
-        $item = Post::select('*')
+	{
+		$item = Post::select('*')
 			->where('ID', $id)
 			->first();
 		$this->setVoteClass($item);
@@ -55,31 +54,29 @@ class PostRepository implements PostInterface {
 			$_item->dateStr = $this->getDateFormatToRss($_item->date);
 		}
 
-        return $item;
-    }
+		return $item;
+	}
 
-		/**
+	/**
 	* get articles for the main page
-    * @param  int $count
+	* @param  int $count
 	* @return \Illuminate\Database\Eloquent\Collection 
 	*/		
 	public static function getAllHome($count = 0)
-    {
+	{
 		$items = Post::select('*')
 			->where('state', '>', '0')
-            ->whereExists(function ($query) {
-                $query->select(DB::raw(1))
-                      ->from('jos1_content_frontpage')
-                      ->whereRaw('jos1_content.id = jos1_content_frontpage.content_id');
-            })
+			->whereExists(function ($query) {
+				$query->select(DB::raw(1))
+					->from('jos1_content_frontpage')
+					->whereRaw('jos1_content.id = jos1_content_frontpage.content_id');
+			})
 			->with('category')
 			->orderBy('ordering', 'asc')
-            ->get();
+			->get();
 
-
-
-        return $items;
-    }
+		return $items;
+	}
 
 	/**
 	* set vote class
@@ -87,15 +84,14 @@ class PostRepository implements PostInterface {
 	* @return void
 	*/	
 	public function setVoteClass(&$item)
-    {
+	{
 		$item->voteClass = $this->voteClass;
 	}
 
 	/**
-    * get vote class
-
+	* get vote class
 	* @return array
-    */
+	*/
 	public function getVoteClass()
 	{
 		return $this->voteClass;
@@ -138,7 +134,7 @@ class PostRepository implements PostInterface {
 	* @return \App\Models\Post 
 	*/	
 	public static function getVoteCount($_item, $item)
-    {
+	{
 		$_item->voteClass = $item->voteClass[0];
 		if ($_item['isgood'] > $_item['ispoor']) $_item->voteClass = $item->voteClass[1];
 		if ($_item['isgood'] < $_item['ispoor']) $_item->voteClass = $item->voteClass[-1];
