@@ -16,5 +16,5 @@ class Vote extends Model
 		'ip',
 		'date',
 		'value'
-	  ];
+	];
 }

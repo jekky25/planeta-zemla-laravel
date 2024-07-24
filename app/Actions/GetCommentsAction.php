@@ -10,10 +10,10 @@ use App\Models\Post;
 class GetCommentsAction
 {
 	/**
-	 * show commments over ajax on the web page
-     * @param  \Illuminate\Http\Request  $request
-	 * @return string JSON
-	 */
+	* show commments over ajax on the web page
+	* @param  \Illuminate\Http\Request  $request
+	* @return string JSON
+	*/
 	public static function handle(GetCommentRequest $request)
 	{
 		$arParams = $request;

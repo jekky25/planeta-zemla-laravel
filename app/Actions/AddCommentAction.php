@@ -15,7 +15,7 @@ class AddCommentAction
 
 	/**
 	* add comments to the DB
-    * @param  App\Requests\AddCommentRequest  $request
+	* @param  App\Requests\AddCommentRequest  $request
 	* @return string JSON
 	*/
 	public static function handle (AddCommentRequest $request)
@@ -58,8 +58,8 @@ class AddCommentAction
 
 			$mess = 'Спасибо за комментарий. Он будет опубликован после проверки модератором';
 			return JsonService::showInfoMessage($mess, 'comments-form');
-        } catch (\Exception $e) {
-            return back()->withError($e->getMessage());
-        }
+		} catch (\Exception $e) {
+			return back()->withError($e->getMessage());
+		}
 	}
 }

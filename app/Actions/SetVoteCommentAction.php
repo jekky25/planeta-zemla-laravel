@@ -15,10 +15,10 @@ class SetVoteCommentAction
 	public static $dateFormatForDb	= 'Y-m-d H:i:s';
 
 	/**
-	 * add vote to the DB and show it on the page
-     * @param  App\Requests\VoteCommentRequest $request
-	 * @return string JSON
-	 */
+	* add vote to the DB and show it on the page
+	* @param  App\Requests\VoteCommentRequest $request
+	* @return string JSON
+	*/
 	public static function handle(VoteCommentRequest $request)
 	{
 		$arParams = $request->post();

@@ -18,8 +18,8 @@ class Post extends Model
 		];
 
 	/**
-    * get post for the home page
-    */		
+	* get post for the home page
+	*/		
 	public function postsFrontend()
 	{
 		return $this->hasOne(
@@ -30,26 +30,25 @@ class Post extends Model
 	}
 
 	/**
-    * get category for the article
-    */
+	* get category for the article
+	*/
 	public function category()
-    {
-        return $this->belongsTo(CategoryHome::class, 'catid', 'id');
-    }
+	{
+		return $this->belongsTo(CategoryHome::class, 'catid', 'id');
+	}
 
 	/**
-    * get article comments
-    */
+	* get article comments
+	*/
 	public function comments()
-    {
-        return $this->hasMany(Comment::class, 'object_id', 'id')->where('published', 1);
-    }
+	{
+		return $this->hasMany(Comment::class, 'object_id', 'id')->where('published', 1);
+	}
 	
 	/**
-    * get vote class
-
+	* get vote class
 	* @return array
-    */
+	*/
 	public function getVoteClass()
 	{
 		return $this->voteClass;
