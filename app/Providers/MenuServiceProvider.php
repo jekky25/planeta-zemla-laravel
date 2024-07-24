@@ -2,8 +2,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
-use App\Models\Menu;
+use App\Repositories\MenuRepository;
+use App\Interfaces\MenuInterface;
 
 class MenuServiceProvider extends ServiceProvider
 {
@@ -14,7 +14,7 @@ class MenuServiceProvider extends ServiceProvider
 	*/
 	public function register()
 	{
-        //
+		$this->app->bind(MenuInterface::class, MenuRepository::class);
 	}
 
 	/**
@@ -22,10 +22,10 @@ class MenuServiceProvider extends ServiceProvider
 	*
 	* @return void
 	*/
-	public function boot()
+	public function boot(MenuInterface $menuRepository)
 	{
-		$menuH 		= Menu::get ('mainmenu');
-		$menuLeft 	= Menu::get ('topmenu');
+		$menuH 		= $menuRepository->get ('mainmenu');
+		$menuLeft 	= $menuRepository->get ('topmenu');
 		view()->share(['menuH' => $menuH, 'menuLeft' => $menuLeft]);
     }
 }
