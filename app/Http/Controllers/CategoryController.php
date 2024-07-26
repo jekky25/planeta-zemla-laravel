@@ -29,7 +29,7 @@ class CategoryController extends Controller
 	* @param string $name
 	* @return \Illuminate\Http\Response
 	*/
-	public function getItem(Request $request, $name)
+	public function getItem($name)
 	{
 		global $code_sape;
 

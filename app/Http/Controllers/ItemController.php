@@ -31,7 +31,7 @@ class ItemController extends Controller
 	* @param int $id
 	* @return \Illuminate\Http\Response
 	*/
-	public function getItem(Request $request, $name, $id)
+	public function getItem($name, $id)
 	{
 		$post 			= $this->postRepository->getById($id);
 		$post->fulltext = $this->postRepository->getSapeCode($post);
@@ -51,7 +51,7 @@ class ItemController extends Controller
 	* @param int $id
 	* @return \Illuminate\Http\Response
 	*/
-	public function getRss(Request $request, $name, $id)
+	public function getRss($name, $id)
 	{
 		$post 	= $this->postRepository->getById($id);
 		if (empty ($post)) abort(404);

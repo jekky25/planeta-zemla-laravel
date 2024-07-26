@@ -62,7 +62,7 @@ class PostRepository implements PostInterface {
 	* @param  int $count
 	* @return \Illuminate\Database\Eloquent\Collection 
 	*/		
-	public static function getAllHome($count = 0)
+	public static function getAllHome()
 	{
 		$items = Post::select('*')
 			->where('state', '>', '0')

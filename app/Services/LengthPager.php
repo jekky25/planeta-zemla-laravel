@@ -14,7 +14,7 @@ abstract class LengthPager
 	* @param  int     $perPage
 	* @return string
 	*/
-	public static function makeLengthAware($collection, $total, $perPage, $appends = null)
+	public static function makeLengthAware($collection, $total, $perPage)
 	{
 		$trailingSlash = '/';
 		$path = Paginator::resolveCurrentPath() . $trailingSlash;
