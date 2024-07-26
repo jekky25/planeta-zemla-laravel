@@ -2,10 +2,8 @@
 
 namespace App\Actions;
 
-use Illuminate\Http\Request;
 use App\Requests\GetCommentRequest;
 use App\Repositories\PostRepository;
-use App\Models\Post;
 
 class GetCommentsAction
 {

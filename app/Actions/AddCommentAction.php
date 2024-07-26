@@ -6,7 +6,6 @@ use App\Requests\AddCommentRequest;
 use App\Services\JsonService;
 use App\Services\GoogleCaptchaService;
 use App\Repositories\CommentRepository;
-use App\Models\Comment;
 use Validator;
 
 class AddCommentAction

@@ -6,9 +6,6 @@ use App\Requests\VoteCommentRequest;
 use App\Repositories\CommentRepository;
 use App\Repositories\VoteRepository;
 use App\Repositories\PostRepository;
-use App\Models\Post;
-use App\Models\Comment;
-use App\Models\Vote;
 
 class SetVoteCommentAction
 {

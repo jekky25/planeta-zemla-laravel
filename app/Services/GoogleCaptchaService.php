@@ -1,8 +1,6 @@
 <?
 namespace App\Services;
 
-use App\Services\JsonService;
-
 class GoogleCaptchaService
 {
 	private $url			= 'https://www.google.com/recaptcha/api/siteverify';

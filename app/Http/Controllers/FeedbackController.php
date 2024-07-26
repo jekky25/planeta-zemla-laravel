@@ -2,17 +2,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\GoogleCaptchaService;
-
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\Auth\Authenticatable;
 use App\Requests\FeedBackRequest;
-
-use Validator;
 use App\Helpers\Email;
 
 class FeedbackController extends Controller

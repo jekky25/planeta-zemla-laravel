@@ -2,9 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Services\LengthPager;
 use App\Interfaces\CategoryInterface;
 use App\Interfaces\PostInterface;
 use App\Traits\Pagination;
