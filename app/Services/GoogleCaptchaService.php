@@ -11,7 +11,6 @@ class GoogleCaptchaService
 	private $response;
 	private $recaptcha;
 	private $score	 		= '0.3';
-	private $success	 	= false;
 	private $error		 	= false;
 	private $errorMessage 	= '';
 
