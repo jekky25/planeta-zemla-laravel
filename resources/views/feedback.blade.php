@@ -4,17 +4,6 @@
 
 <div class="componentheading">
 			</div>
-@push('scripts')
-<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render={{GoogleCaptchaService::getSiteKey()}}"></script>
-@endpush
-<script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('{{GoogleCaptchaService::getSiteKey()}}', { action: 'contact' }).then(function (token) {
-                var recaptchaResponse = document.getElementById('recaptchaResponse');
-                recaptchaResponse.value = token;
-            });
-        });
-    </script>
 <div id="component-contact">
 	<div class="componentheading"></div>
 	<h2 class="contentheading">
@@ -34,7 +23,7 @@
 				@endif
 				<form action="{{route('feedback')}}" method="post" name="emailForm" id="emailForm" class="form-validate">
 					{{ csrf_field() }}
-					<input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+					<x-google-captcha />
 					<div class="contact_email">
 						<label for="contact_name">&nbsp;Введите ваше имя:</label>
 						<br />
