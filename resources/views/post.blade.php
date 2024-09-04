@@ -15,16 +15,7 @@ google_ad_height = 90;
 </script>
 @push('scripts')
 <script type="text/javascript" async src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render={{GoogleCaptchaService::getSiteKey()}}"></script>
 @endpush
-<script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('{{GoogleCaptchaService::getSiteKey()}}', { action: 'contact' }).then(function (token) {
-                var recaptchaResponse = document.getElementById('recaptchaResponse');
-                recaptchaResponse.value = token;
-            });
-        });
-</script>
 </div>
 <div class="article-content">{!! $post->introtext !!}{!! $post->fulltext !!}
 <div class="gog_baner2">
@@ -36,7 +27,6 @@ google_ad_width = 728;
 google_ad_height = 90;
 //-->
 </script>
-<script async type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 </div></div>
 <script type="text/javascript">
 <!--
@@ -99,6 +89,7 @@ jcomments.setList('comments-list');
 	<h4>Добавить комментарий</h4>
 	<a id="addcomments" href="#addcomments"></a>
 	<form id="comments-form" name="comments-form" action="javascript:void(null);">
+	<x-google-captcha />
 	<p>
 		<input id="comments-form-name" type="text" name="name" value="" maxlength="20" size="22" tabindex="1" class="">
 		<label for="comments-form-name">Имя (обязательное)</label>
@@ -114,7 +105,6 @@ jcomments.setList('comments-list');
 		<input class="checkbox" id="comments-form-subscribe" type="checkbox" name="subscribe" value="1" tabindex="5">
 		<label for="comments-form-subscribe">Подписаться на уведомления о новых комментариях</label><br>
 	</p>
-	<input type="hidden" name="recaptcha_response" id="recaptchaResponse">
 	<div id="comments-form-buttons">
 		<div class="btn" id="comments-form-send"><div><a href="#" tabindex="7" onclick="jcomments.saveComment();return false;" title="Отправить (Ctrl+Enter)">Отправить</a></div></div>
 		<div class="btn" id="comments-form-cancel" style="display:none;"><div><a href="#" tabindex="8" onclick="return false;" title="Отменить">Отменить</a></div></div>
