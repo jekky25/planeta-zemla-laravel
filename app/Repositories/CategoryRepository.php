@@ -16,6 +16,6 @@ class CategoryRepository implements CategoryInterface {
 	{
 		return Category::select('*')
 			->where('alias', $name)
-			->first();
+			->firstOrFail();
 	}
 }

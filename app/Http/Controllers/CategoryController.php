@@ -31,11 +31,7 @@ class CategoryController extends Controller
 	public function getItem($name)
 	{
 		global $code_sape;
-
-		if (empty ($name)) abort(404);
 		$category = $this->categoryRepository->getByName($name);
-		if (empty ($category)) abort(404);
-
 		$posts 			= $this->postRepository->getAll($this->countPerPage, $category->id);
 		$pagination		= $this->getPaginationLinks ($posts);
 
