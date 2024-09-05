@@ -40,4 +40,18 @@ class FeedBackRequest extends FormRequest
 					'recaptcha_response' 			=> 'Капча не пройдена'
 				];
 	}
+
+	/**
+	* Get the validated data from the request.
+	*
+	* @param  array|int|string|null  $key
+	* @param  mixed  $default
+	* @return mixed
+	*/
+	public function validated ($key = null, $default = null)
+	{
+		$ar = $this->validator->validated();
+		$ar['email_copy'] = !empty ($ar['email_copy']) ?: 0;
+		return data_get($ar, $key, $default);
+	}
 }

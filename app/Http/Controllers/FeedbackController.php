@@ -8,15 +8,6 @@ use App\Helpers\Email;
 class FeedbackController extends Controller
 {
 	/**
-	* Create a new controller instance.
-	*
-	* @return void
-	*/
-	public function __construct()
-	{
-	}
-
-	/**
 	* Show a feedBack page
 	* @param  \Illuminate\Http\Request  $request
 	* @return \Illuminate\Http\Response
@@ -36,17 +27,17 @@ class FeedbackController extends Controller
 	*/
 	public function sendFeedBack(FeedBackRequest $request)
 	{
-		$arParams	= $request->post();
+		$arParams	= $request->validated();
 		$email_template = 'feedback';
 
-		$EMAIL['NAME'] 		= $arParams['name'];
-		$EMAIL['EMAIL'] 	= $arParams['email'];
-		$EMAIL['SUBJECT'] 	= $arParams['subject'];
-		$EMAIL['TEXT'] 		= $arParams['text'];
+		$EMAIL['NAME']		= $arParams['name'];
+		$EMAIL['EMAIL']		= $arParams['email'];
+		$EMAIL['SUBJECT']	= $arParams['subject'];
+		$EMAIL['TEXT']		= $arParams['text'];
 
 		Email::sendEmail($email_template, 'jekky25@list.ru', $EMAIL, 'Сообщение через обратную связь www.planeta-zemla.ru');
 
-		if (!empty ($arParams['email_copy']) && $arParams['email_copy'] == 1)
+		if (Email::isSendCopy($arParams['email_copy']))
 		{
 			Email::sendEmail($email_template, $arParams['email'], $EMAIL, 'Сообщение через обратную связь www.planeta-zemla.ru');
 		}

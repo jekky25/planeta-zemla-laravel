@@ -4,24 +4,16 @@ namespace App\Helpers;
 class Email {
 
 	/**
-     * Create a new Email instance.
-     *
-     * @return void
-     */
-    public function __construct(){
-    }
-
-	 /**
-     * sends emails
-     * 
-     * @param string $email_template
-     * @param string $email
-     * @param string $EMAIL
-	 * @param string $subject
-     * @return void
-     */
-    public static function sendEmail($email_template, $email, $EMAIL, $subject)
-    {
+	* sends emails
+	* 
+	* @param string $email_template
+	* @param string $email
+	* @param string $EMAIL
+	* @param string $subject
+	* @return void
+	*/
+	public static function sendEmail($email_template, $email, $EMAIL, $subject)
+	{
 		include_once('../includes/emailer.php');
 	
 		$emailer = new emailer(0);
@@ -35,5 +27,10 @@ class Email {
 		$emailer->use_template($email_template);
 		$emailer->send();
 		$emailer->reset();
-    }
+	}
+
+	public static function isSendCopy($val = 0)
+	{
+		return ($val == 1);
+	}
 }
