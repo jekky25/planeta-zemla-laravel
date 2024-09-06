@@ -44,7 +44,7 @@ class PostRepository implements PostInterface {
 	{
 		$item = Post::select('*')
 			->where('ID', $id)
-			->first();
+			->firstOrFail();
 		$this->setVoteClass($item);
 
 		foreach ($item->comments as &$_item)

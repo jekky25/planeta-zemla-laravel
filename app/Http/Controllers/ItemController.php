@@ -33,8 +33,8 @@ class ItemController extends Controller
 	*/
 	public function getItem($name, $id)
 	{
-		$post 			= $this->postRepository->getById($id);
-		$post->fulltext = $this->postRepository->getSapeCode($post);
+		$post				= $this->postRepository->getById($id);
+		$post->fulltext		= $this->postRepository->getSapeCode($post);
 		if (empty ($post)) abort(404);
 
 		$data = [
@@ -54,7 +54,6 @@ class ItemController extends Controller
 	public function getRss($name, $id)
 	{
 		$post 	= $this->postRepository->getById($id);
-		if (empty ($post)) abort(404);
 		$data = [
 			'post'			=> $post,
 			'refreshTime'	=> $this->postRepository->getDateFormatToRss(\Carbon\Carbon::now())
@@ -72,7 +71,7 @@ class ItemController extends Controller
 	*/
 	public function getAjax(Request $request)
 	{
-		$arParams 	= $request->post();
+		$arParams	= $request->post();
 		if (empty ($arParams['jtxf'])) abort(404);
 		$act 		= $arParams['jtxf'];
 		switch ($act) {
