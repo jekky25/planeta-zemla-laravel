@@ -18,7 +18,8 @@ class FeedBackRequest extends FormRequest
 			'email'					=> ['required', 'email'],
 			'subject'				=> ['required', 'max:300'],
 			'text'					=> ['required', 'max:1000'],
-			'recaptcha_response'	=> ['required', new GoogleCaptcha]
+			'recaptcha_response'	=> ['required', new GoogleCaptcha],
+			'email_copy'			=> ['bool']
 		];
 	}
 

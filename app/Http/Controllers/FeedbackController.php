@@ -36,7 +36,6 @@ class FeedbackController extends Controller
 		$EMAIL['TEXT']		= $arParams['text'];
 
 		Email::sendEmail($email_template, 'jekky25@list.ru', $EMAIL, 'Сообщение через обратную связь www.planeta-zemla.ru');
-
 		if (Email::isSendCopy($arParams['email_copy']))
 		{
 			Email::sendEmail($email_template, $arParams['email'], $EMAIL, 'Сообщение через обратную связь www.planeta-zemla.ru');
