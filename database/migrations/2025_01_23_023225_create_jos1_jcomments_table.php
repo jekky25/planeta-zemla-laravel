@@ -27,7 +27,7 @@ return new class extends Migration
 			$table->string('homepage');
 			$table->string('title');
 			$table->text('comment');
-			$table->char('ip', 15);
+			$table->string('ip', 15);
 			$table->dateTime('date');
 			$table->smallInteger('isgood')->default(0);
 			$table->smallInteger('ispoor')->default(0);
