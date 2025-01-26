@@ -4,6 +4,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\MenuRepository;
 use App\Interfaces\MenuInterface;
+use Illuminate\Support\Facades\View;
 
 class MenuServiceProvider extends ServiceProvider
 {
@@ -24,8 +25,10 @@ class MenuServiceProvider extends ServiceProvider
 	*/
 	public function boot(MenuInterface $menuRepository)
 	{
-		$menuH 		= $menuRepository->get ('mainmenu');
-		$menuLeft 	= $menuRepository->get ('topmenu');
-		view()->share(['menuH' => $menuH, 'menuLeft' => $menuLeft]);
+		View::composer('*', function() use ($menuRepository) {
+			$menuH 		= $menuRepository->get('mainmenu');
+			$menuLeft 	= $menuRepository->get('topmenu');
+			view()->share(['menuH' => $menuH, 'menuLeft' => $menuLeft]);
+		});
     }
 }
