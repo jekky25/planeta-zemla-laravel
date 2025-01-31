@@ -1,58 +1,27 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-Route::get('/migr', function () {
-	//	Artisan::call('make:migration create_users_table');
-	//    return "Миграция выполнена!";
-	});
-	
-	Route::get('/artis', function () {
-	//		Artisan::call('make:provider SapeServiceProvider');
-			//Artisan::call('make:model Hotel');
-			//return "Артисан выполнен!";
-	});
-	
-	Route::get('/clear', function () {
-	/*
-			Artisan::call('cache:clear');
-			Artisan::call('config:cache');
-			Artisan::call('view:clear');
-			Artisan::call('route:clear');
-			*/
-	//		return "Сброс кэша выполнен!";
-	
-	});
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', 'HomeController@index')->name('home');
-Route::middleware('slashes')->group(function () {
-	Route::post('feedback/', 					'FeedbackController@sendFeedBack')								->name('sendFeedback');
-	Route::get('feedback/', 					'FeedbackController@getFeedBack')								->name('feedback');
-
-	Route::get('{name}/{id}-{itemName}/', 		'ItemController@getItem')			->whereNumber('id')			->name('item_name');
-	Route::get('{name}/', 						'CategoryController@getItem')									->name('category_name');
-	Route::get('{name}/{id}-{itemName}/rss/',	'ItemController@getRss')			->whereNumber('id')			->name('comment_rss');
-	Route::post('ajax/comment_ajax/', 			'ItemController@getAjax')			->whereNumber('id')			->name('comment_ajax');
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
 
-if (!function_exists('pr')) {
-	function pr (...$ar)
-	{
-		foreach ($ar as $_ar)
-		{
-			echo '<pre>'; print_r ($_ar); echo '</pre>';
-		}
-	}
-}
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
