@@ -15,7 +15,7 @@ class FeedbackController extends Controller
 	public function getFeedBack()
 	{
 		$title = 'Обратная связь, Земля как планета';
-		return response()->view ('feedback', [
+		return response()->view('feedback', [
 			'title'		=> $title
 		]);
 	}

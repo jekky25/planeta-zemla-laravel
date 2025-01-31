@@ -46,7 +46,7 @@
 						</div>
 					</div>
 					<div id="left_col">
-					@if (!empty ($menuLeft))
+					@if (!empty($menuLeft))
 					<div class="moduletable">
 					<ul id="mainlevel-nav">
 					@foreach ($menuLeft as $item)
