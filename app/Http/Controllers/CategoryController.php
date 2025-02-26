@@ -32,8 +32,8 @@ class CategoryController extends Controller
 	{
 		global $code_sape;
 		$category = $this->categoryRepository->getByName($name);
-		$posts 			= $this->postRepository->getAll($this->countPerPage, $category->id);
-		$pagination		= $this->getPaginationLinks ($posts);
+		$posts          = $this->postRepository->getAll($this->countPerPage, $category->id);
+		$pagination     = $this->getPaginationLinks($posts);
 
 		$data = [
 			'title'			=> $category->title . ' Земля как планета',

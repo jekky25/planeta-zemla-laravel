@@ -12,8 +12,8 @@ class FeedbackController extends Controller
 	* @param  \Illuminate\Http\Request  $request
 	* @return \Illuminate\Http\Response
 	*/
-	public function getFeedBack()
-	{
+	public function getFeedBack(): \Illuminate\Http\Response
+    {
 		$title = 'Обратная связь, Земля как планета';
 		return response()->view('feedback', [
 			'title'		=> $title

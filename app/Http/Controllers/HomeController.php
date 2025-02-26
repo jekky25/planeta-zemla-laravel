@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\PostInterface;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -24,10 +25,9 @@ class HomeController extends Controller
 	*/
 	public function index()
 	{
-		$posts	= $this->postRepository->getAllHome($this->countPerPage);
 		$data = [
-			'posts'			=> $posts,
+			'posts'			=> $this->postRepository->getAllHome($this->countPerPage)
 		];
-		return view('home', $data);
+		return Inertia::render('Home', $data);
 	}
 }

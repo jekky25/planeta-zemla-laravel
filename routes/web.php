@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -12,6 +13,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -22,5 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::middleware('slashes')->group(function () {
+	Route::post('feedback/', 					'FeedbackController@sendFeedBack')								->name('sendFeedback');
+	Route::get('feedback/', 					'FeedbackController@getFeedBack')								->name('feedback');
+    Route::get('{name}/', 						'CategoryController@getItem')									->name('category.name');
+});
+
 require __DIR__.'/auth.php';
-require __DIR__.'/old_routes.php';

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Resources\MenuHResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        MenuHResource::withoutWrapping();
         Vite::prefetch(concurrency: 3);
     }
 }
