@@ -24,7 +24,7 @@ input.button {padding-bottom:4px;}
 ul {list-style-type: none;}
 
 
-h2 {font-size:14px; padding-bottom:20px; color:#2d6697;}
+#main_content h2 {font-size:14px; padding-bottom:20px; color:#2d6697; font-weight: bold;}
 h3 {color:#38518a; font-family: "Times New Roman", Verdana, Tahoma, Arial, sans-serif; font-size:14px;}
 
 a, a:visited {text-decoration:none; color: #0215a3; font-family: "Times New Roman", Verdana, Tahoma, Arial, sans-serif;}

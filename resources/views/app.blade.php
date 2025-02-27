@@ -17,7 +17,7 @@
 		<script type="text/javascript" src="{{ asset("js/jcomments/jcomments-v2.1.js?t=5") }}"></script>
 		<script type="text/javascript" src="{{ asset("js/jcomments/ajax.js?v=1") }}"></script>
 		@stack('scripts')
-		<link rel="stylesheet" href="{{ asset("css/style.css?t=4") }}" type="text/css" />
+		<link rel="stylesheet" href="{{ asset("css/style.css?t=6") }}" type="text/css" />
 		<!-- Scripts -->
 		@routes
 		@vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])

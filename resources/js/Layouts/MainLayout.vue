@@ -9,8 +9,8 @@
 					<div class="moduletable_menu">
 						<ul class="menu">
 							<template v-for="item in menuTop">
-								<li v-if="item.home == true" class="item{{ item.id }}"><a :href="route('home')"><span>{{ item.name }}</span></a></li>
-								<li class="item{{ item.id }}" v-else><a :href="route('category.name', item.slug)"><span>{{ item.name }}</span></a></li>
+								<li v-if="item.home == true" :class="`item${item.id}`"><a :href="route('home')"><span>{{ item.name }}</span></a></li>
+								<li :class="`item${item.id}`" v-else><a :href="route('category.name', item.slug)"><span>{{ item.name }}</span></a></li>
 							</template>
 						</ul>
 					</div>

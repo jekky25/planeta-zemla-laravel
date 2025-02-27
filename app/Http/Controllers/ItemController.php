@@ -10,9 +10,12 @@ use App\Actions\AddCommentAction;
 use App\Actions\GetCommentsAction;
 use App\Actions\SetVoteCommentAction;
 use App\Interfaces\PostInterface;
+use App\Http\Resources\PostResource;
 
 class ItemController extends Controller
 {
+	public $countPerPage 	= 10;
+
 	/**
 	* Create a new controller instance.
 	*
@@ -88,5 +91,15 @@ class ItemController extends Controller
 			abort(404);
 		}
 		return $x;
+	}
+
+	/**
+	* Get all posts
+	* @param  PostInterface $post
+	* @return json
+	*/
+	public function getAll(PostInterface $post)
+	{
+		return PostResource::collection($post->getAllHome($this->countPerPage));
 	}
 }

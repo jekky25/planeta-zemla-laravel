@@ -29,6 +29,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::middleware('slashes')->group(function () {
 	Route::post('feedback/', 					'FeedbackController@sendFeedBack')								->name('sendFeedback');
 	Route::get('feedback/', 					'FeedbackController@getFeedBack')								->name('feedback');
+    Route::get('{name}/{id}-{itemName}/', 		'ItemController@getItem')			->whereNumber('id')			->name('item.name');
     Route::get('{name}/', 						'CategoryController@getItem')									->name('category.name');
 });
 
