@@ -3,7 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\MenuRepository;
-use App\Http\Resources\MenuHResource;
+use App\Http\Resources\MenuTopResource;
+use App\Http\Resources\MenuLeftResource;
 
 class MenuController extends Controller
 {
@@ -22,8 +23,18 @@ class MenuController extends Controller
 	* @param  MenuRepository  $menu
 	* @return json
 	*/
-	public function getMenuH(MenuRepository $menu)
+	public function getMenuTop(MenuRepository $menu)
 	{
-		return MenuHResource::collection($menu->get('mainmenu'));
+		return MenuTopResource::collection($menu->get('mainmenu'));
+	}
+
+	/**
+	* Get left menu
+	* @param  MenuRepository  $menu
+	* @return json
+	*/
+	public function getMenuLeft(MenuRepository $menu)
+	{
+		return MenuLeftResource::collection($menu->get('topmenu'));
 	}
 }

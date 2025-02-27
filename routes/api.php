@@ -18,4 +18,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/get/menu_h', 'MenuController@getMenuH')->name('get.menu.H');
+Route::get('/get/menu/top', 'MenuController@getMenuTop')->name('get.menu.top');
+Route::get('/get/menu/left', 'MenuController@getMenuLeft')->name('get.menu.left');
