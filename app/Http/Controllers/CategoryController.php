@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\CategoryInterface;
+use App\Http\Resources\PostResource;
 use App\Interfaces\PostInterface;
 use App\Traits\Pagination;
 use Inertia\Inertia;
@@ -38,11 +39,12 @@ class CategoryController extends Controller
 
 		$data = [
 			'title'			=> $category->title . ' Земля как планета',
-			'posts'			=> $posts,
+			'posts'			=> PostResource::collection($posts)->resolve(),
 			'category'		=> $category,
 			'code_sape'		=> $code_sape,
 			'pagination'	=> $pagination,
 		];
+
 		return Inertia::render('Home', $data);
 	}
 }
