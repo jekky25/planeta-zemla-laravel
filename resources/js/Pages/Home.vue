@@ -9,9 +9,9 @@
 						<h2 class="contentheading"><a :href="route('item.name', [post.category.slug, post.id, post.slug])" class="contentpagetitle">{{ post.title }}</a></h2>
 						<div class="article-content"><span v-html="post.introtext"></span>
 							<div class="jcomments-links">
-								<a class="readmore-link" :href="route('item.name', [post.category.slug, post.id, post.slug])" :title="post.title">Подробнее...</a>
-								<a v-if="post.comments.length > 0" :href="`${route('item.name',[post.category.slug, post.id, post.slug])}#comments`" class="comments-link">Комментарии ({{ post.comments.length }})</a>
-								<a v-else :href="`${route('item.name',[post.category.slug, post.id, post.slug])}#addcomments`" class="comments-link">Добавить комментарий</a>
+								<Link class="readmore-link" :href="route('item.name', [post.category.slug, post.id, post.slug])" :title="post.title">Подробнее...</Link>
+								<Link v-if="post.comments.length > 0" :href="`${route('item.name',[post.category.slug, post.id, post.slug])}#comments`" class="comments-link">Комментарии ({{ post.comments.length }})</Link>
+								<Link v-else :href="`${route('item.name',[post.category.slug, post.id, post.slug])}#addcomments`" class="comments-link">Добавить комментарий</Link>
 							</div>
 						</div>
 					</div>
@@ -24,7 +24,6 @@
 
 <script>
 import MainLayout from '@/Layouts/MainLayout.vue';
-
 export default {
 	name: "Index",
 	layout: MainLayout,
@@ -55,6 +54,7 @@ export default {
 		}
 	}
 } 
-    
-
+</script>
+<script setup>
+import {Link} from '@inertiajs/vue3';
 </script>

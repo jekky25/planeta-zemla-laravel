@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\CategoryInterface;
 use App\Interfaces\PostInterface;
 use App\Traits\Pagination;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -26,7 +27,7 @@ class CategoryController extends Controller
 	* Show an article page in the category
 	* @param  \Illuminate\Http\Request  $request
 	* @param string $name
-	* @return \Illuminate\Http\Response
+	* @return Inertia
 	*/
 	public function getItem($name)
 	{
@@ -42,6 +43,6 @@ class CategoryController extends Controller
 			'code_sape'		=> $code_sape,
 			'pagination'	=> $pagination,
 		];
-		return response()->view('home', $data);
+		return Inertia::render('Home', $data);
 	}
 }

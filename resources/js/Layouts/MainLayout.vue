@@ -9,8 +9,8 @@
 					<div class="moduletable_menu">
 						<ul class="menu">
 							<template v-for="item in menuTop">
-								<li v-if="item.home == true" :class="`item${item.id}`"><a :href="route('home')"><span>{{ item.name }}</span></a></li>
-								<li :class="`item${item.id}`" v-else><a :href="route('category.name', item.slug)"><span>{{ item.name }}</span></a></li>
+								<li v-if="item.home == true" :class="`item${item.id}`"><Link :href="route('home')"><span>{{ item.name }}</span></Link></li>
+								<li :class="`item${item.id}`" v-else><Link :href="route('category.name', item.slug)"><span>{{ item.name }}</span></Link></li>
 							</template>
 						</ul>
 					</div>
@@ -25,7 +25,7 @@
 						<div id="left_col">
 							<div v-if="menuLeft" class="moduletable">
 								<ul id="mainlevel-nav">
-									<li v-for="item in menuLeft"><a class="mainlevel-nav" :href="route('category.name', item.slug)">{{ item.name }}</a></li>
+									<li v-for="item in menuLeft"><Link class="mainlevel-nav" :href="route('category.name', item.slug)">{{ item.name }}</Link></li>
 								</ul>
 							</div>
 						</div>
@@ -89,4 +89,7 @@ export default {
 			}
 		}
 }
+</script>
+<script setup>
+import {Link} from '@inertiajs/vue3';
 </script>
