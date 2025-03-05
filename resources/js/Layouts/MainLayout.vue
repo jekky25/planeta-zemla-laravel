@@ -3,7 +3,7 @@
 		<div id="overhtm1">
 			<div id="overhtm2">
 				<div id="header">
-					<h1><a :href="route('home')" title="На главную"><img alt="На главную" :src="'../images/logo.png'" /></a></h1>
+					<h1><a :href="route('home')" title="На главную"><img alt="На главную" :src="'../../../images/logo.png'" /></a></h1>
 				</div>
 				<div v-if="menuTop" id="hmenu">
 					<div class="moduletable_menu">

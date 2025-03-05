@@ -31,6 +31,8 @@ Route::middleware('slashes')->group(function () {
 	Route::get('feedback/', 					'FeedbackController@getFeedBack')								->name('feedback');
     Route::get('{name}/{id}-{itemName}/', 		'ItemController@getItem')			->whereNumber('id')			->name('item.name');
     Route::get('{name}/', 						'CategoryController@getItem')									->name('category.name');
+    Route::get('{name}/{id}-{itemName}/rss/',	'ItemController@getRss')			->whereNumber('id')			->name('comment.rss');
+    Route::post('ajax/comment_ajax/', 			'ItemController@getAjax')			->whereNumber('id')			->name('comment.ajax');
 });
 
 require __DIR__.'/auth.php';

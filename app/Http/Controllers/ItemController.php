@@ -11,6 +11,7 @@ use App\Actions\GetCommentsAction;
 use App\Actions\SetVoteCommentAction;
 use App\Interfaces\PostInterface;
 use App\Http\Resources\PostResource;
+use Inertia\Inertia;
 
 class ItemController extends Controller
 {
@@ -37,14 +38,11 @@ class ItemController extends Controller
 	public function getItem($name, $id)
 	{
 		$post				= $this->postRepository->getById($id);
-		$post->fulltext		= $this->postRepository->getSapeCode($post);
-		if (empty ($post)) abort(404);
-
 		$data = [
 			'title'			=> $post->title . ' Земля как планета',
-			'post'			=> $post
+			'post'			=> new PostResource($post)
 		];
-		return response()->view('post', $data);
+		return Inertia::render('Post', $data);
 	}
 
 	/**

@@ -22,6 +22,7 @@ class PostResource extends JsonResource
 			'slug'				=> $this->alias,
 			'category'			=> new CategoryShortResource($this->category),
 			'introtext'			=> $this->introtext,
+			'fulltext'			=> $this->fulltext,
 			'comments'			=> CommentShortResource::collection($this->comments)->resolve()
 		];
 	}

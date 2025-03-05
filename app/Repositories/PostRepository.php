@@ -53,7 +53,7 @@ class PostRepository implements PostInterface {
 			$_item->date 	= $this->getDateFormat($_item->date);
 			$_item->dateStr = $this->getDateFormatToRss($_item->date);
 		}
-
+		$item->fulltext		= $this->getSapeCode($item);
 		return $item;
 	}
 
