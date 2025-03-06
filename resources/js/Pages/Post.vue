@@ -6,8 +6,7 @@
 		<div v-if="post.comments" id="jc">
 			<div id="comments">
 				<h4>Комментарии
-					<Link class="rss" :href="route('comment.rss',[post.category.slug, post.id, post.slug])" title="RSS лента комментариев этой записи" target="_blank">&nbsp;</Link>
-					<Link class="refresh" href="#" title="Обновить список комментариев" onclick="jcomments.showPage(post.id ,'com_content',0);return false;">&nbsp;</Link>
+					<a class="rss" :href="route('comment.rss',[post.category.slug, post.id, post.slug])" title="RSS лента комментариев этой записи" target="_blank">&nbsp;</a>
 				</h4>
 				<div id="comments-list" class="comments-list">
 					<template v-for="(comment, index) in post.comments">
@@ -47,9 +46,7 @@
 					</template>
 				</div>
 				<div id="comments-list-footer">
-					<Link class="refresh" href="#" title="Обновить список комментариев" :onclick="`jcomments.showPage(${post.id},'com_content',0);return false;`">Обновить список комментариев</Link>
-					<br />
-					<Link class="rss" :href="route('comment.rss',[post.category.slug, post.id, post.slug])" target="_blank">RSS лента комментариев этой записи</Link>
+					<a class="rss" :href="route('comment.rss',[post.category.slug, post.id, post.slug])" target="_blank">RSS лента комментариев этой записи</a>
 				</div>
 			</div>
 			<h4>Добавить комментарий</h4>
