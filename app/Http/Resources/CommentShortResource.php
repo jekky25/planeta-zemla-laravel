@@ -19,6 +19,8 @@ class CommentShortResource extends JsonResource
 			'name'			=> $this->name,
 			'date'			=> $this->date,
 			'text'			=> $this->comment,
+			'voteCount'		=> $this->voteCount,
+			'voteClass'		=> $this->voteClass,
 			'votes'			=> VoteShortResource::collection($this->votes)->resolve()
 		];
 	}

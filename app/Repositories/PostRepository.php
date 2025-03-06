@@ -129,16 +129,19 @@ class PostRepository implements PostInterface {
 	
 	/**
 	* get count of the votes for the comment
-	* @param  \App\Models\Comment $_item
+	* @param  \App\Models\Comment $comment
 	* @param  \App\Models\Post $item
 	* @return \App\Models\Post 
 	*/	
-	public static function getVoteCount($_item, $item)
+	public static function getVoteCount($comment, $item)
 	{
-		$_item->voteClass = $item->voteClass[0];
-		if ($_item['isgood'] > $_item['ispoor']) $_item->voteClass = $item->voteClass[1];
-		if ($_item['isgood'] < $_item['ispoor']) $_item->voteClass = $item->voteClass[-1];
-		$_item['voteCount'] =  $_item['isgood'] - $_item['ispoor'];
-		return ($_item);
+		$comment->voteClass = $item->voteClass[0];
+		$comment->isgood = $comment->votes->where('value', 1)->count();
+		$comment->ispoor = $comment->votes->where('value', -1)->count();
+		
+		if ($comment->isgood > $comment->ispoor) $comment->voteClass = $item->voteClass[1];
+		if ($comment->isgood < $comment->ispoor) $comment->voteClass = $item->voteClass[-1];
+		$comment->voteCount =  $comment->isgood - $comment->ispoor;
+		return ($comment);
 	}
 }

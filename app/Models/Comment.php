@@ -30,14 +30,31 @@ class Comment extends Model
 		'object_params'		=> ''
 	];
 
+	protected $typesOfVoteClass = [
+		'0'		=> 'vote-none',
+		'1'		=> 'vote-good',
+		'-1'	=> 'vote-poor'
+		];
+
 	public		$timestamps 	= false;
+
+	public function getVoteCountAttribute()
+	{
+		return (int)($this->isgood - $this->ispoor);
+	}
+
+	public function getVoteClassAttribute()
+	{
+		if ($this->isgood > $this->ispoor) return $this->typesOfVoteClass[1];
+		if ($this->isgood < $this->ispoor) return $this->typesOfVoteClass[-1];
+		return $this->typesOfVoteClass[0];
+	}
 
 	/**
 	* get votes
 	*/
 	public function votes()
 	{
-		$ip = request()->ip();
-		return $this->hasMany(Vote::class, 'commentid', 'id')->where('ip', $ip);
+		return $this->hasMany(Vote::class, 'commentid', 'id');
 	}	
 }

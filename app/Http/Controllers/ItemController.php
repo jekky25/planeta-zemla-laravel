@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Requests\AddCommentRequest;
 use App\Requests\GetCommentRequest;
-use App\Requests\VoteCommentRequest;
+use App\Http\Requests\VoteCommentRequest;
 use App\Http\Controllers\Controller;
 use App\Actions\AddCommentAction;
 use App\Actions\GetCommentsAction;
@@ -23,8 +23,7 @@ class ItemController extends Controller
 	* @return void
 	*/
 	public function __construct(
-		protected PostInterface $postRepository, 
-		protected VoteCommentRequest $requestVote)
+		protected PostInterface $postRepository)
 	{
 	}
 
@@ -79,9 +78,6 @@ class ItemController extends Controller
 			case 'JCommentsShowPage':
 				$x = GetCommentsAction::handle(new GetCommentRequest($arParams));
 				break;
-			case 'JCommentsVoteComment':
-				$x = SetVoteCommentAction::handle($this->requestVote);
-				break;
 			case 'JCommentsAddComment':
 				$x = AddCommentAction::handle(new AddCommentRequest($arParams));
 				break;
@@ -89,6 +85,18 @@ class ItemController extends Controller
 			abort(404);
 		}
 		return $x;
+	}
+
+	/**
+	* update city in admin
+	*
+	* @param  VoteCommentRequest  $request
+	* @param  int $id
+	* @return bool
+	*/
+	public function update(VoteCommentRequest $request, $id)
+	{
+		return SetVoteCommentAction::handle($request->validated(), $id);
 	}
 
 	/**

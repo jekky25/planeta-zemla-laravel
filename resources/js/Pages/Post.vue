@@ -22,8 +22,8 @@
 									<div class="comment-box usertype-guest">
 										<span class="comments-vote">
 											<span :id="`comment-vote-holder-${comment.id}`">
-												<Link v-if="comment.votes" href="#" class="vote-good" title="Хороший комментарий!" onclick="jcomments.voteComment(comment.id, 1);return false;"></Link>
-												<Link v-if="comment.votes" href="#" class="vote-poor" title="Плохой комментарий!" onclick="jcomments.voteComment(comment.id, -1);return false;"></Link>
+												<a v-if="comment.votes" href="#" class="vote-good" title="Хороший комментарий!" v-on:click.prevent="voteComment(comment.id, 1);"></a>
+												<a v-if="comment.votes" href="#" class="vote-poor" title="Плохой комментарий!" v-on:click.prevent="voteComment(comment.id, -1);"></a>
 												<span :class="comment.voteClass">{{ comment.voteCount }}</span>
 											</span>
 										</span>
@@ -85,7 +85,7 @@ import GoogleCaptcha from '@/Components/GoogleCaptcha.vue';
 </script>
 <script>
 import MainLayout from '@/Layouts/MainLayout.vue';
-import {Link} from '@inertiajs/vue3';
+import {Link, router} from '@inertiajs/vue3';
 
 export default {
 	name: "Page",
@@ -135,7 +135,23 @@ export default {
 					jcEditor.addSmile(':sigh:','unsure.gif');
 					jcEditor.addCounter(1000, 'Осталось:', ' символов', 'counter');
 					jcomments.setForm(new JCommentsForm('comments-form', jcEditor));
-}	},
+			},
+			voteComment(id, vote)
+			{
+				let data = {
+					vote : vote
+				};
+
+				axios.patch(route('post.update', {id}), data)
+				.then(res => {
+					router.reload();
+				})
+				.catch(res => {
+					this.errors = res.data;
+				});
+				return false;
+			}
+	},
 	mounted()
 	{
 		var jcomments=new JComments( this.post.id , 'com_content',route('comment.ajax'));

@@ -25,12 +25,10 @@ class CommentRepository implements CommentInterface {
 	* @param  int $id
 	* @return \Illuminate\Database\Eloquent\Collection 
 	*/
-	public static function getById($id)
+	public function getById($id)
 	{
-		$item = Comment::select('*')
+		return Comment::select('*')
 			->where('id', $id)
-			->first();
-
-		return $item;
+			->firstOrFail();
 	}
 }

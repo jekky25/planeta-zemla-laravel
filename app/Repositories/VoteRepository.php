@@ -7,12 +7,16 @@ use App\Models\Vote;
 class VoteRepository implements VoteInterface {
 	/**
 	* create a vote
-	* @param  array $request
+	* @param  array $fields
 	* @return void
 	*/	
-	public function create($request) {
+	public function create($fields) {
 		try {
-			Vote::create($request);
+			$checkFields = [
+				'commentid' => $fields['commentid'],
+				'ip'	 	=> $fields['ip']
+			];
+			Vote::updateOrCreate($checkFields, $fields);
 		} catch (\Exception $e) {
 			throw new \Exception('Failed to create a vote '.$e->getMessage());
 		}
