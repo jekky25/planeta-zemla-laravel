@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Comment extends Model
 {
 	use HasFactory;
 
+	public static $dateFormatForDb	= 'Y-m-d H:i:s';
 	protected	$table 			= 'jos1_jcomments';
 	protected	$with 			= ['votes'];
 	protected	$fillable = [
@@ -16,11 +18,13 @@ class Comment extends Model
 		'comment',
 		'date',
 		'object_id',
+		'post_id',
 		'name',
 		'username',
 		'email',
 		'ip',
-		'published'
+		'published',
+		'message'
 	];
 
 	protected	$attributes = [
@@ -38,6 +42,22 @@ class Comment extends Model
 		];
 
 	public		$timestamps 	= false;
+
+	public static function boot()
+	{
+		parent::boot();
+		self::creating(function ($model) {
+			$model->published	= 1;
+			$model->ip			= request()->ip();
+			$model->username	= $model->name;
+			$model->object_id	= $model->post_id;
+			$model->date	 	= Carbon::now()->format(self::$dateFormatForDb);
+			$model->comment		= $model->message;
+			$model->lang		= 'ru-RU';
+			unset($model->post_id);
+			unset($model->message);
+		});
+	}
 
 	public function getVoteCountAttribute()
 	{

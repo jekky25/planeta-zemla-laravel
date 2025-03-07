@@ -4,12 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use J25\GoogleCaptcha\GoogleCaptcha;
-use Carbon\Carbon;
 
 class AddCommentRequest extends FormRequest
 {
-	public static $dateFormatForDb	= 'Y-m-d H:i:s';
-
 	/**
 	* rules for the request
 	* @return string array
@@ -18,38 +15,11 @@ class AddCommentRequest extends FormRequest
 	{
 		return [
 			'post_id'				=> ['required', 'integer', 'min:1'],
-			'object_id'				=> ['nullable'],
 			'name'					=> ['required', 'string', 'max:30'],
-			'username'				=> ['string', 'max:30'],
 			'email'					=> ['required', 'email'],
 			'message'				=> ['required', 'max:1000'],
-			'recaptcha_response'	=> ['required', new GoogleCaptcha],
-			'lang'					=> ['nullable', 'string'],
-			'comment'				=> ['nullable', 'string'],
-			'date'					=> ['nullable'],
-			'ip'					=> ['nullable', 'string'],
-			'published'				=> ['nullable', 'integer']
+			'recaptcha_response'	=> ['required', new GoogleCaptcha]
 		];
-	}
-
-	/**
-	* Prepare params for validation
-	*
-	* @return void
-	*/
-	protected function prepareForValidation()
-    {
-        $this->merge([
-			'lang'				=> 'ru-RU',
-			'comment'		 	=> $this->message,
-			'date'	 			=> Carbon::now()->format(self::$dateFormatForDb),
-			'object_id'			=> $this->post_id,
-			'name'	 			=> $this->name,
-			'username'		 	=> $this->name,
-			'email'		 		=> $this->email,
-			'ip'	 			=> request()->ip(),
-			'published'			=> 1
-        ]);
 	}
 
 	/**
