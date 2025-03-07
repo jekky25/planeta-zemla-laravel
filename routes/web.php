@@ -34,5 +34,6 @@ Route::middleware('slashes')->group(function () {
     Route::get('{name}/{id}-{itemName}/rss/',	'ItemController@getRss')			->whereNumber('id')			->name('comment.rss');
     Route::post('ajax/comment_ajax/', 			'ItemController@getAjax')			->whereNumber('id')			->name('comment.ajax');
 });
+    Route::post('ajax/comment/store', 			'CommentController@store')		                                ->name('comment.store');
 
 require __DIR__.'/auth.php';

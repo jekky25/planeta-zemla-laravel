@@ -19,7 +19,8 @@ class Comment extends Model
 		'name',
 		'username',
 		'email',
-		'ip'
+		'ip',
+		'published'
 	];
 
 	protected	$attributes = [

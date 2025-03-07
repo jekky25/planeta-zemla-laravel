@@ -52,22 +52,21 @@
 			<h4>Добавить комментарий</h4>
 			<Link id="addcomments" href="#addcomments"></Link>
 			<form id="comments-form" name="comments-form" action="javascript:void(null);">
-				<GoogleCaptcha></GoogleCaptcha>
+				<input type="hidden" name="_token" autocomplete="off" :value="$attrs.csrf_field" />
+				<div class="success-text" v-html="success" v-if="success"></div>
+				<div class="error-text" v-html="errors" v-if="errors"></div>
+				<GoogleCaptcha ref="googleCaptcha"></GoogleCaptcha>
 				<p>
-					<input id="comments-form-name" type="text" name="name" value="" maxlength="20" size="22" tabindex="1" class="">
+					<input v-model="name" id="comments-form-name" type="text" name="name" value="" maxlength="20" size="22" tabindex="1" class="">
 					<label for="comments-form-name">Имя (обязательное)</label>
 				</p>
 				<p>
-					<input id="comments-form-email" type="text" name="email" value="" size="22" tabindex="2">
+					<input v-model="email" id="comments-form-email" type="text" name="email" value="" size="22" tabindex="2">
 					<label for="comments-form-email">E-Mail (обязательное)</label>
 				</p>
-				<p><textarea id="comments-form-comment" name="comment" cols="65" rows="8" tabindex="5"></textarea></p>
-				<p>
-					<input class="checkbox" id="comments-form-subscribe" type="checkbox" name="subscribe" value="1" tabindex="5">
-					<label for="comments-form-subscribe">Подписаться на уведомления о новых комментариях</label><br>
-				</p>
+				<p><textarea v-model="message" id="comments-form-comment" name="message" cols="65" rows="8" tabindex="5"></textarea></p>
 				<div id="comments-form-buttons">
-					<div class="btn" id="comments-form-send"><div><Link href="#" tabindex="7" onclick="jcomments.saveComment();return false;" title="Отправить (Ctrl+Enter)">Отправить</Link></div></div>
+					<div class="btn" id="comments-form-send"><div><a href="#" tabindex="7" v-on:click.prevent="saveComment();" title="Отправить (Ctrl+Enter)">Отправить</a></div></div>
 					<div class="btn" id="comments-form-cancel" style="display:none;"><div><Link href="#" tabindex="8" onclick="return false;" title="Отменить">Отменить</Link></div></div>
 					<div style="clear:both;"></div>
 				</div>
@@ -95,7 +94,16 @@ export default {
 	],
 	data() {
 			return {
-				errors: null
+				errors: '',
+				success: '',
+				regexpEmail:/^(?:[a-z0-9._]+(?:[-_.]?[a-z0-9._]+)?@[a-z0-9_.-]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i,
+				id: 0,
+				name:'',
+				email:'',
+				message:'',
+				post_id: 0,
+				recaptcha_response: '',
+				data: Object
 			};
 	},
 	methods: {
@@ -133,6 +141,11 @@ export default {
 					jcEditor.addCounter(1000, 'Осталось:', ' символов', 'counter');
 					jcomments.setForm(new JCommentsForm('comments-form', jcEditor));
 			},
+			clearParams()
+			{
+				this.$data.errors = '';
+				this.$data.success = '';
+			},
 			voteComment(id, vote)
 			{
 				let data = {
@@ -145,6 +158,67 @@ export default {
 				})
 				.catch(res => {
 					this.errors = res.data;
+				});
+				return false;
+			},
+			saveComment()
+			{
+				this.clearParams();
+				this.checkName();
+				this.checkEMail();
+				this.checkMessage();
+
+				if (this.isError()) return false;
+				this.getData();
+				this.sendAjax();
+				return false;
+				
+			},
+			checkName()
+			{
+				if (this.name.length < 2) {
+					this.$data.errors += '<p>Имя не введено</p>';
+				}
+			},
+			checkEMail() 
+			{
+				if (!this.email.match(this.$data.regexpEmail)) {
+					this.$data.errors += '<p>Некорректно введен е-майл</p>';
+				}
+			},
+			checkMessage()
+			{
+				if (this.message.length < 2) {
+					this.$data.errors += '<p>Не введено сообщение</p>';
+				}
+			},
+			isError()
+			{
+				return this.$data.errors != '' ? true : false;
+			},
+			getData()
+			{
+				this.$data.name		= this.name;
+				this.$data.email	= this.email;
+				this.$data.message	= this.message;
+				this.$data._token	= this.csrf_field;
+				this.$data.post_id	= this.post.id;
+				this.recaptcha_response	= document.getElementById('recaptchaResponse').value;
+			},
+			sendAjax()
+			{
+				axios.post(route('comment.store', this.$data))
+				.then(res => {
+					let success = res.data.success;
+					router.reload();
+					if (success == 1)
+					{
+						this.success = '<p>Спасибо! Сообщение успешно добавлено!</p>';
+					}
+				})
+				.catch(res => {
+					this.$data.errors += '<p>' + res.response.data.message + '</p>';
+					this.$refs.googleCaptcha.initReCaptcha();
 				});
 				return false;
 			}
