@@ -11,7 +11,7 @@ export default {
 			var google_recaptcha_key = this.$page.props.config.google_recaptcha_key
 			setTimeout(function() {
 				if(typeof grecaptcha === 'undefined') {
-					self.initReCaptcha();
+					this.initReCaptcha();
 				} else {
 					grecaptcha.ready(function () {
 						grecaptcha.execute(google_recaptcha_key, { action: 'contact' }).then(function (token) {
@@ -32,8 +32,8 @@ export default {
 		recaptchaScript.setAttribute('id', 'recaptcha');
 		recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?render=' + this.$page.props.config.google_recaptcha_key);
 		document.head.appendChild(recaptchaScript);
-
-		this.initReCaptcha();
+		var ref = this
+		ref.initReCaptcha();
 	}
 }
 </script>
