@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasPrepareText;
 use Carbon\Carbon;
 
 class Comment extends Model
 {
-	use HasFactory;
+	use HasFactory, HasPrepareText;
 
 	public static $dateFormatForDb	= 'Y-m-d H:i:s';
 	protected	$table 			= 'jos1_jcomments';
@@ -62,6 +63,11 @@ class Comment extends Model
 	public function getVoteCountAttribute()
 	{
 		return (int)($this->isgood - $this->ispoor);
+	}
+
+	public function getCommentAttribute($val)
+	{
+		return $this->replace($val);
 	}
 
 	public function getVoteClassAttribute()

@@ -13,7 +13,7 @@
 				<input v-model="email" id="comments-form-email" type="text" name="email" value="" size="22" tabindex="2">
 				<label for="comments-form-email">E-Mail (обязательное)</label>
 			</p>
-			<p><textarea v-model="message" id="comments-form-comment" name="message" cols="65" rows="8" tabindex="5"></textarea></p>
+			<p><textarea v-model="message" id="comments-form-comment" :name="message" cols="65" rows="8" tabindex="5"></textarea></p>
 			<div id="comments-form-buttons">
 				<div class="btn" id="comments-form-send"><div><a href="#" tabindex="7" v-on:click.prevent="saveComment();" title="Отправить (Ctrl+Enter)">Отправить</a></div></div>
 				<div class="btn" id="comments-form-cancel" style="display:none;"><div><Link href="#" tabindex="8" onclick="return false;" title="Отменить">Отменить</Link></div></div>
@@ -130,7 +130,7 @@ export default {
 			{
 				this.$data.name		= this.name;
 				this.$data.email	= this.email;
-				this.$data.message	= this.message;
+				this.$data.message	= document.getElementById('comments-form-comment').value;
 				this.$data._token	= this.csrf_field;
 				this.$data.post_id	= this.post.id;
 				this.recaptcha_response	= document.getElementById('recaptchaResponse').value;
