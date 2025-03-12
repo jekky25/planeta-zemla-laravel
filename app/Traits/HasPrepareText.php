@@ -6,6 +6,7 @@ namespace App\Traits;
 use App\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Modules\BBCode\B;
+use App\Modules\BBCode\CustomBBCode;
 use App\Modules\BBCode\I;
 use App\Modules\BBCode\U;
 use App\Modules\BBCode\S;
@@ -36,7 +37,8 @@ trait HasPrepareText
 		Sup::class,
 		Sub::class,
 		Hide::class,
-		Quote::class
+		Quote::class,
+		CustomBBCode::class
 	];
 
 	/**
