@@ -100,3 +100,6 @@ div.gog_baner2 {width:730px; margin:0 auto; padding-bottom:10px; padding-top:10p
 .success {color: #00af0f; padding-bottom: 10px; font-weight: bold;}
 .outS {padding-top:10px;}
 
+#main_content1 img.smile {
+	display:inline-block;
+}

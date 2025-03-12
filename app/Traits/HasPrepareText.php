@@ -15,6 +15,7 @@ use App\Modules\BBCode\Sup;
 use App\Modules\BBCode\Sub;
 use App\Modules\BBCode\Hide;
 use App\Modules\BBCode\Quote;
+use App\Modules\BBCode\Smile;
 
 /**
  * Trait HasFilter
@@ -38,7 +39,8 @@ trait HasPrepareText
 		Sub::class,
 		Hide::class,
 		Quote::class,
-		CustomBBCode::class
+		CustomBBCode::class,
+		Smile::class
 	];
 
 	/**
