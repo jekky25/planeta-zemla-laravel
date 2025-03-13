@@ -423,7 +423,12 @@ JComments.prototype = {
 	editComment: function(i){this.busyComment(i);var a=arguments;if(this.form==null){a=new Array(i,1);}return this.ajax('JCommentsEditComment', a);},
 	cancelEdit: function(i){if((!this.cache[i])||(this.cache[i]=='')){this.$('comment-body-'+i).innerHTML=this.cache[i];this.cache[i]='';}if(this.form){this.form.remove('comment-id-hidden-'+i);this.restoreForm(true);}var t=this.$('comment-toolbar-'+i);if(t){t.style.display='';}return this.ajax('JCommentsCancelComment',arguments);},
 	cancelReply: function(){if(this.form){this.form.remove('comment-parent-id-hidden');this.restoreForm(false);}},
-	quoteComment: function(i){var a=arguments;if(this.form==null){a=new Array(i,1);}return this.ajax('JCommentsQuoteComment',a);},
+	quoteComment: function(i){
+		var a=arguments;
+		if(this.form==null){
+			a=new Array(i,1);
+		}
+		return this.ajax('JCommentsQuoteComment',a);},
 	publishComment: function(i){if(this.form){this.restoreForm();}this.busyComment(i); return this.ajax('JCommentsPublishComment',arguments);},
 	deleteComment: function(i){this.busyComment(i); return this.ajax('JCommentsDeleteComment',arguments);},
 	jump2email: function(i){return this.ajax('JCommentsJump2email',arguments);},

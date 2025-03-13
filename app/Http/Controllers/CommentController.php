@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddCommentRequest;
 use App\Repositories\CommentRepository;
+use App\Http\Resources\CommentShortResource;
 
 class CommentController extends Controller
 {
@@ -14,6 +15,17 @@ class CommentController extends Controller
 	*/
 	public function __construct()
 	{
+	}
+
+	/**
+	* get comment by id
+	*
+	* @param  int $id
+	* @return \Illuminate\Http\Response
+	*/
+	public function get(CommentRepository $comment, $id)
+	{
+		return new CommentShortResource($comment->getById($id));
 	}
 
 	/**

@@ -33,6 +33,7 @@ Route::middleware('slashes')->group(function () {
     Route::get('{name}/', 						'CategoryController@getItem')									->name('category.name');
     Route::get('{name}/{id}-{itemName}/rss/',	'ItemController@getRss')			->whereNumber('id')			->name('comment.rss');
     Route::post('ajax/comment_ajax/', 			'ItemController@getAjax')			->whereNumber('id')			->name('comment.ajax');
+    Route::get('ajax/comment/{id}', 			'CommentController@get')			->whereNumber('id')			->name('comment.id.ajax');
 });
     Route::post('ajax/comment/store', 			'CommentController@store')		                                ->name('comment.store');
 

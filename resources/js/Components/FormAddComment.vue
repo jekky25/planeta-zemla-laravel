@@ -60,7 +60,7 @@ export default {
 					jcEditor.addButton('custombbcode4','Google Video','Введите текст для форматирования','[google]','[/google]','bbcode-google','');
 					jcEditor.addButton('custombbcode8','Facebook Video','Введите текст для форматирования','[fv]','[/fv]','bbcode-facebook','');
 					jcEditor.addButton('custombbcode10','Wikipedia','Введите текст для форматирования','[wiki]','[/wiki]','bbcode-wiki','');
-					jcEditor.initSmiles('/images/smilies');
+					jcEditor.initSmiles('/images/smiles');
 					jcEditor.addSmile(':D','laugh.gif');
 					jcEditor.addSmile(':lol:','lol.gif');
 					jcEditor.addSmile(':-)','smile.gif');

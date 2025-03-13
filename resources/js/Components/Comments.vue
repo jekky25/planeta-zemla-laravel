@@ -27,7 +27,7 @@
 									<span class="comment-date">{{ comment.date }}</span>
 									<div class="comment-body" :id="`comment-body-${comment.id}`" v-html="comment.text"></div>
 									<span class="comments-buttons">
-										<Link href="#" :onclick="`jcomments.quoteComment(${comment.id}); return false;`">Цитировать</Link>
+										<a href="#" v-on:click.prevent="quoteComment(comment.id);">Цитировать</a>
 									</span>
 								</div>
 								<div class="clear"></div>
@@ -88,6 +88,24 @@ export default {
 				this.errors = res.data;
 			});
 			return false;
+		},
+		async ajax($path)
+		{
+			let r;
+			await axios.get($path)
+			.then(res => {
+				r = res.data;
+			})
+			.catch(res => {
+				this.$data.errors += '<p>' + res.response.data.message + '</p>';
+			});
+			return r;
+		},
+		async quoteComment(id){
+			let comment = await this.ajax(route('comment.id.ajax', id));
+			let mes = this.$refs.formAddComment.message.length == 0 ? '' : '\n';
+				mes += '[quote]' + comment.text + '[/quote]\n';
+			this.$refs.formAddComment.message += mes;
 		}
 	}
 }
