@@ -71,20 +71,7 @@ class ItemController extends Controller
 	*/
 	public function getAjax(Request $request)
 	{
-		$arParams	= $request->post();
-		if (empty ($arParams['jtxf'])) abort(404);
-		$act 		= $arParams['jtxf'];
-		switch ($act) {
-			case 'JCommentsShowPage':
-				$x = GetCommentsAction::handle(new GetCommentRequest($arParams));
-				break;
-			case 'JCommentsAddComment':
-				$x = AddCommentAction::handle(new AddCommentRequest($arParams));
-				break;
-			default:
-			abort(404);
-		}
-		return $x;
+		return true;
 	}
 
 	/**
