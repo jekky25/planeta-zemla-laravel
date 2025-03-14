@@ -18,7 +18,7 @@ img {border:0;}
 fieldset {border:0px;}
 form input {
 	border:0; 
-	color:#000 !important; 
+	color:#000; 
 	font-size:10px !important;
 	font-family: Verdana, Arial, "Times New Roman", Tahoma, sans-serif; 
 	vertical-align:middle; 
@@ -27,6 +27,14 @@ form input {
 	vertical-align:middle;  
 	padding-top:3px;
 }
+
+input {
+	--tw-ring-shadow: 0 0 #000 !important;
+}
+textarea {
+	--tw-ring-color: transparent !important;
+}
+
 input.button {color:#fff; font-size:10px; line-height:10px; padding-bottom:2px; padding-top:2px;}
 @-moz-document url-prefix(){
 input.button {padding-bottom:4px;}
@@ -102,4 +110,33 @@ div.gog_baner2 {width:730px; margin:0 auto; padding-bottom:10px; padding-top:10p
 
 #main_content1 img.smile {
 	display:inline-block;
+}
+
+#emailForm .error-text {max-width: 200px;}
+
+#comments-form .error-text, .form-validate .error-text {
+	color:#a01619; 
+	font-size: 12px; 
+	padding-bottom: 5px; 
+	text-align: center;
+}
+#comments-form .error-text p, .form-validate .error-text p {
+	margin-bottom: 0;
+	color:#a01619;
+	margin-top: 0;
+	font-size: 11px;
+}
+#comments-form .success-text, .form-validate .success-text {
+	padding-bottom: 20px; 
+	padding-top: 20px; 
+	text-align: center; 
+	color:#16a01c; 
+	font-size: 12px;
+}
+
+#comments-form .success-text p, .form-validate .success-text p {
+	margin-bottom: 0;
+	color:#16a01c;
+	margin-top: 0;
+	font-size: 11px;
 }

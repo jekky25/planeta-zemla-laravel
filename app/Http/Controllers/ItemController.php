@@ -2,12 +2,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Requests\AddCommentRequest;
-use App\Requests\GetCommentRequest;
 use App\Http\Requests\VoteCommentRequest;
 use App\Http\Controllers\Controller;
-use App\Actions\AddCommentAction;
-use App\Actions\GetCommentsAction;
 use App\Actions\SetVoteCommentAction;
 use App\Interfaces\PostInterface;
 use App\Http\Resources\PostResource;

@@ -39,7 +39,7 @@
 					<div id="feedback">
 						<div class="moduletable">
 							<ul class="menu">
-								<li class="item3"><a :href="route('feedback')"><span>Обратная связь</span></a></li>
+								<li class="item3"><Link :href="route('feedback')"><span>Обратная связь</span></Link></li>
 							</ul>
 						</div>
 					</div>

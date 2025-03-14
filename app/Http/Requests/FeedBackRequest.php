@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Requests;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use J25\GoogleCaptcha\GoogleCaptcha;
@@ -17,7 +17,7 @@ class FeedBackRequest extends FormRequest
 			'name'					=> ['required', 'string', 'max:30'],
 			'email'					=> ['required', 'email'],
 			'subject'				=> ['required', 'max:300'],
-			'text'					=> ['required', 'max:1000'],
+			'message'				=> ['required', 'max:1000'],
 			'recaptcha_response'	=> ['required', new GoogleCaptcha],
 			'email_copy'			=> ['bool']
 		];
@@ -36,8 +36,8 @@ class FeedBackRequest extends FormRequest
 					'email.email'					=> 'Поле Емайл заполнено не корректно',
 					'subject.required'				=> 'Тема не заполнена',
 					'subject.max'					=> 'Поле Тема должно быть не более :max символов',
-					'text.required'					=> 'Комментарий не заполнен',
-					'text.max'						=> 'Ваш комментарий слишком длинный',
+					'message.required'				=> 'Комментарий не заполнен',
+					'message.max'					=> 'Ваш комментарий слишком длинный',
 					'recaptcha_response' 			=> 'Капча не пройдена'
 				];
 	}
@@ -49,7 +49,7 @@ class FeedBackRequest extends FormRequest
 	* @param  mixed  $default
 	* @return mixed
 	*/
-	public function validated ($key = null, $default = null)
+	public function validated($key = null, $default = null)
 	{
 		$ar = $this->validator->validated();
 		$ar['email_copy'] = !empty ($ar['email_copy']) ?: 0;

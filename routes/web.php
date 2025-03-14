@@ -27,14 +27,14 @@ Route::middleware('auth')->group(function () {
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::middleware('slashes')->group(function () {
-	Route::post('feedback/', 					'FeedbackController@sendFeedBack')								->name('sendFeedback');
-	Route::get('feedback/', 					'FeedbackController@getFeedBack')								->name('feedback');
+	Route::get('feedback/', 					'FeedbackController@get')						        		->name('feedback');
     Route::get('{name}/{id}-{itemName}/', 		'ItemController@getItem')			->whereNumber('id')			->name('item.name');
     Route::get('{name}/', 						'CategoryController@getItem')									->name('category.name');
     Route::get('{name}/{id}-{itemName}/rss/',	'ItemController@getRss')			->whereNumber('id')			->name('comment.rss');
     Route::post('ajax/comment_ajax/', 			'ItemController@getAjax')			->whereNumber('id')			->name('comment.ajax');
     Route::get('ajax/comment/{id}', 			'CommentController@get')			->whereNumber('id')			->name('comment.id.ajax');
 });
+    Route::post('feedback/', 					'FeedbackController@send')				        				->name('feedback.send');
     Route::post('ajax/comment/store', 			'CommentController@store')		                                ->name('comment.store');
 
 require __DIR__.'/auth.php';
