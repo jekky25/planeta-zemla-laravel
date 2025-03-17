@@ -12,53 +12,68 @@
 						<div class="error-text" v-html="errors" v-if="errors"></div>
 						<GoogleCaptcha ref="googleCaptcha"></GoogleCaptcha>
 						<div v-show="visible" class="contact_email">
-							<div class="mb-4">
-								<label for="contact_name">&nbsp;Введите ваше имя:</label>
-								<br />
-								<input v-model="name" type="text" name="name" id="contact_name" size="30" class="shadow appearance-none border inputbox rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="" />
-							</div>
+							<LabelInput LabelId="contact_name" v-model="name" type="text" name="name" id="contact_name">&nbsp;Введите ваше имя:</LabelInput>
 							<div class="mb-4">
 								<label id="contact_emailmsg" for="contact_email">&nbsp;E-mail адрес:</label>
 								<br />
-								<input v-model="email" type="text" id="contact_email" name="email" size="30" value="" class="inputbox required validate-email rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="100" />
+								<TextInput v-model="email" type="text" name="email" id="contact_email"></TextInput>
 							</div>
 							<div class="mb-4">
 								<label for="contact_subject">&nbsp;Тема сообщения:</label>
 								<br />
-								<input v-model="subject" type="text" name="subject" id="contact_subject" size="30" class="inputbox rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="" />
+								<TextInput v-model="subject" type="text" name="subject" id="contact_subject"></TextInput>
 							</div>
 							<div class="mb-4">
 								<label id="contact_textmsg" for="contact_text">&nbsp;Введите текст вашего сообщения:</label>
 								<br />
-								<textarea v-model="message" cols="50" rows="10" :name="message" id="contact_message" class="inputbox required rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-transparent focus:border-transparent"></textarea>
+								<Textarea v-model="message" cols="50" rows="10" :name="message" id="contact_message"></Textarea>
 							</div>
 							<div class="mb-4">
-								<input v-model="copy" class="mr-2 border inputbox rounded focus:text-blue-600 ring-offset-0" type="checkbox" name="copy" id="contact_email_copy" value="1" />
+								<Checkbox name="copy" v-model="copy" id="contact_email_copy" value="1" />
 								<label for="contact_email_copy">Отправить копию этого сообщения на ваш адрес</label>
 							</div>
-							<div><button class="button validate bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-on:click.prevent="send();" type="submit">Отправить</button></div>
+							<div><SubmitButton v-on:click.prevent="send();">Отправить</SubmitButton></div>
 						</div>
 					</form>
 				</td>
 			</tr>
 		</table>
+		<TestChild ref="Testic" v-model="proba"></TestChild>
+<br/>
+<!--button @click="updateLocation">Click  Top</button-->>
+
 	</div>
 </template>
-<script setup>
-import GoogleCaptcha from '@/Components/GoogleCaptcha.vue';
-</script>
 <script>
 	import MainLayout from '@/Layouts/MainLayout.vue';
 	import {Link} from '@inertiajs/vue3';
+	import GoogleCaptcha from '@/Components/GoogleCaptcha.vue';
+	import SubmitButton from '@/Components/Forms/SubmitButton.vue';
+	import TextInput from '@/Components/Forms/TextInput.vue';
+	import Textarea from '@/Components/Forms/Textarea.vue';
+	import Checkbox from '@/Components/Forms/Checkbox.vue';
+	import LabelInput from '@/Components/Blocks/LabelInput.vue';
+
+	import TestChild from '@/Components/Blocks/TestChild.vue';
 
 	export default {
 		name: "Page",
 		components: {
-			Link
+			Link,
+			GoogleCaptcha,
+			SubmitButton,
+			TextInput,
+			Textarea,
+			Checkbox,
+			LabelInput,
+			TestChild
 		},
 		layout: MainLayout,
 		props: [
 		],
+
+		
+
 		data() {
 		return {
 			errors: '',
@@ -68,6 +83,7 @@ import GoogleCaptcha from '@/Components/GoogleCaptcha.vue';
 			subject:'',
 			email:'',
 			message:'',
+			proba:'',
 			recaptcha_response: '',
 			visible: true,
 			data: Object
@@ -121,6 +137,9 @@ import GoogleCaptcha from '@/Components/GoogleCaptcha.vue';
 			},
 			send()
 			{
+				alert(this.name);
+				alert(this.email);
+
 				this.clearParams();
 				this.checkName();
 				this.checkSubject();
@@ -149,7 +168,19 @@ import GoogleCaptcha from '@/Components/GoogleCaptcha.vue';
 					this.reloadCaptcha();
 				});
 				return false;
-			}
+			},
+/*
+			updateLocation()
+            {
+                alert('kkk');
+                //alert(this.proba);
+				//console.log(this.$refs);
+				console.log(this.$refs.Testic);
+                alert(this.$refs);
+				//alert(this.$refs.googleCaptcha);
+				//alert(this.$refs.Testic);
+            }
+*/
 		}
 	}
 </script>

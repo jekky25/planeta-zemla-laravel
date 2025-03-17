@@ -23,16 +23,17 @@
 			<input type="hidden" name="object_group" value="com_content">
 		</form>
 </template>
-<script setup>
-import GoogleCaptcha from '@/Components/GoogleCaptcha.vue';
-</script>
 <script>
 import {Link, router} from '@inertiajs/vue3';
+import GoogleCaptcha from '@/Components/GoogleCaptcha.vue';
 export default {
 	name: "FormAddComment",
 	props: [
 		'post',
 	],
+	components: {
+			GoogleCaptcha
+		},
 	data() {
 		return {
 			errors: '',

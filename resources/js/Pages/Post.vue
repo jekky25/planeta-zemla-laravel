@@ -6,17 +6,16 @@
 		<Comments :post="post"></Comments>
 	</template>
 </template>
-<script setup>
-	import Comments from '@/Components/Comments.vue';
-</script>
 <script>
 	import MainLayout from '@/Layouts/MainLayout.vue';
 	import {Link} from '@inertiajs/vue3';
+	import Comments from '@/Components/Comments.vue';
 
 	export default {
 		name: "Page",
 		components: {
-			Link
+			Link,
+			Comments
 		},
 		layout: MainLayout,
 		props: [
