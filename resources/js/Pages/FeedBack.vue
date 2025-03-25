@@ -15,11 +15,7 @@
 							<LabelInput ref="name" v-model="name" type="text" name="name" id="contact_name">&nbsp;Введите ваше имя:</LabelInput>
 							<LabelInput ref="email" v-model="email" type="text" name="name" id="contact_email">&nbsp;E-mail адрес:</LabelInput>
 							<LabelInput ref="subject" v-model="subject" type="text" name="subject" id="contact_subject">&nbsp;Тема сообщения:</LabelInput>
-							<div class="mb-4">
-								<label id="contact_textmsg" for="contact_text">&nbsp;Введите текст вашего сообщения:</label>
-								<br />
-								<Textarea v-model="message" cols="50" rows="10" :name="message" id="contact_message"></Textarea>
-							</div>
+							<LabelTextarea ref="message" v-model="message" name="message" id="contact_message">&nbsp;Введите текст вашего сообщения:</LabelTextarea>
 							<div class="mb-4">
 								<Checkbox name="copy" v-model="copy" id="contact_email_copy" value="1" />
 								<label for="contact_email_copy">Отправить копию этого сообщения на ваш адрес</label>
@@ -41,6 +37,7 @@
 	import Textarea from '@/Components/Forms/Textarea.vue';
 	import Checkbox from '@/Components/Forms/Checkbox.vue';
 	import LabelInput from '@/Components/Blocks/LabelInput.vue';
+	import LabelTextarea from '@/Components/Blocks/LabelTextarea.vue';
 
 	export default {
 		name: "Page",
@@ -51,7 +48,8 @@
 			TextInput,
 			Textarea,
 			Checkbox,
-			LabelInput
+			LabelInput,
+			LabelTextarea
 		},
 		layout: MainLayout,
 		props: [
@@ -101,7 +99,7 @@
 			},
 			checkMessage()
 			{
-				if (this.message.length < 2) {
+				if (this.$refs.message.get().length < 2) {
 					this.$data.errors += '<p>Не введено сообщение</p>';
 				}
 			},
@@ -114,7 +112,7 @@
 				this.$data.name		= this.$refs.name.get();
 				this.$data.email	= this.$refs.email.get();
 				this.$data.subject	= this.$refs.subject.get();
-				this.$data.message	= document.getElementById('contact_message').value;
+				this.$data.message	= this.$refs.message.get();
 				this.$data._token	= this.csrf_field;
 				this.recaptcha_response	= document.getElementById('recaptchaResponse').value;
 			},
