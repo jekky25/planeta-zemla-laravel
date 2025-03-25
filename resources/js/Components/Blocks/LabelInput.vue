@@ -1,12 +1,3 @@
-<!--<script setup>
-const props = defineProps({
-    forInp: {
-        default: null,
-        type: String,
-    }
-});
-</script>-->
-
 <script>
 import TextInput from '@/Components/Forms/TextInput.vue';
 
@@ -17,15 +8,13 @@ export default {
 		},
 		data() {
 				return {
+                    inputName:'',
+                    data: Object
 				};
+                
 			},
-        //props : ['id', 'LabelId', 'type', 'name', 'model'],
         props: {
             id: {
-                type: String,
-                default: null
-            },
-            LabelId: {
                 type: String,
                 default: null
             },
@@ -43,21 +32,19 @@ export default {
             },
 
         },
-      	mounted() {
-            //alert(this.$attrs.forInp);
-		//	this.for		= 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh';
-        //alert(this.for);
-        this.personal = this.$refs.InputField.model
-		},
 		methods:
 		{
+            get()
+            {
+                return this.inputName;
+            }
 		}
 	}
 </script>
 <template>
     <div class="mb-4">
-		<label :id="this.LabelId" :for="this.id"><slot /></label>
+		<label :for="this.id"><slot /></label>
 			<br />
-            <TextInput model="name" :type="this.type" :name="this.name" :id="this.id" ref="InputField"></TextInput>
+            <TextInput v-model="inputName" :type="this.type" :name="this.name" :id="this.id" ref="InputField"></TextInput>
 	</div>
 </template>

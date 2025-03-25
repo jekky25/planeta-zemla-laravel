@@ -12,17 +12,9 @@
 						<div class="error-text" v-html="errors" v-if="errors"></div>
 						<GoogleCaptcha ref="googleCaptcha"></GoogleCaptcha>
 						<div v-show="visible" class="contact_email">
-							<LabelInput LabelId="contact_name" v-model="name" type="text" name="name" id="contact_name">&nbsp;Введите ваше имя:</LabelInput>
-							<div class="mb-4">
-								<label id="contact_emailmsg" for="contact_email">&nbsp;E-mail адрес:</label>
-								<br />
-								<TextInput v-model="email" type="text" name="email" id="contact_email"></TextInput>
-							</div>
-							<div class="mb-4">
-								<label for="contact_subject">&nbsp;Тема сообщения:</label>
-								<br />
-								<TextInput v-model="subject" type="text" name="subject" id="contact_subject"></TextInput>
-							</div>
+							<LabelInput ref="name" v-model="name" type="text" name="name" id="contact_name">&nbsp;Введите ваше имя:</LabelInput>
+							<LabelInput ref="email" v-model="email" type="text" name="name" id="contact_email">&nbsp;E-mail адрес:</LabelInput>
+							<LabelInput ref="subject" v-model="subject" type="text" name="subject" id="contact_subject">&nbsp;Тема сообщения:</LabelInput>
 							<div class="mb-4">
 								<label id="contact_textmsg" for="contact_text">&nbsp;Введите текст вашего сообщения:</label>
 								<br />
@@ -38,10 +30,6 @@
 				</td>
 			</tr>
 		</table>
-		<TestChild ref="Testic" v-model="proba"></TestChild>
-<br/>
-<!--button @click="updateLocation">Click  Top</button-->>
-
 	</div>
 </template>
 <script>
@@ -54,8 +42,6 @@
 	import Checkbox from '@/Components/Forms/Checkbox.vue';
 	import LabelInput from '@/Components/Blocks/LabelInput.vue';
 
-	import TestChild from '@/Components/Blocks/TestChild.vue';
-
 	export default {
 		name: "Page",
 		components: {
@@ -65,15 +51,11 @@
 			TextInput,
 			Textarea,
 			Checkbox,
-			LabelInput,
-			TestChild
+			LabelInput
 		},
 		layout: MainLayout,
 		props: [
 		],
-
-		
-
 		data() {
 		return {
 			errors: '',
@@ -101,19 +83,19 @@
 			},
 			checkName()
 			{
-				if (this.name.length < 2) {
+				if (this.$refs.name.get().length < 2) {
 					this.$data.errors += '<p>Имя не введено</p>';
 				}
 			},
 			checkEMail() 
 			{
-				if (!this.email.match(this.$data.regexpEmail)) {
+				if (!this.$refs.email.get().match(this.$data.regexpEmail)) {
 					this.$data.errors += '<p>Некорректно введен е-майл</p>';
 				}
 			},
 			checkSubject() 
 			{
-				if (this.subject.length < 2) {
+				if (this.$refs.subject.get().length < 2) {
 					this.$data.errors += '<p>Тема не введена</p>';
 				}
 			},
@@ -129,17 +111,15 @@
 			},
 			getData()
 			{
-				this.$data.name		= this.name;
-				this.$data.email	= this.email;
+				this.$data.name		= this.$refs.name.get();
+				this.$data.email	= this.$refs.email.get();
+				this.$data.subject	= this.$refs.subject.get();
 				this.$data.message	= document.getElementById('contact_message').value;
 				this.$data._token	= this.csrf_field;
 				this.recaptcha_response	= document.getElementById('recaptchaResponse').value;
 			},
 			send()
 			{
-				alert(this.name);
-				alert(this.email);
-
 				this.clearParams();
 				this.checkName();
 				this.checkSubject();
@@ -168,19 +148,7 @@
 					this.reloadCaptcha();
 				});
 				return false;
-			},
-/*
-			updateLocation()
-            {
-                alert('kkk');
-                //alert(this.proba);
-				//console.log(this.$refs);
-				console.log(this.$refs.Testic);
-                alert(this.$refs);
-				//alert(this.$refs.googleCaptcha);
-				//alert(this.$refs.Testic);
-            }
-*/
+			}
 		}
 	}
 </script>
