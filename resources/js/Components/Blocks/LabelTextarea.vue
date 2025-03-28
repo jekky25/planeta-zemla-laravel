@@ -26,6 +26,10 @@ export default {
                 type: String,
                 default: null
             },
+            rows: {
+                type: String,
+                default: 2
+            },
 
         },
 		methods:
@@ -41,6 +45,6 @@ export default {
     <div class="mb-4">
 		<label :for="this.id"><slot /></label>
 			<br />
-            <Textarea v-model="inputName" :name="this.name" :id="this.id" ref="InputField"></Textarea>
+            <Textarea v-model="inputName" :name="this.name" :id="this.id" ref="InputField" :rows="this.rows"></Textarea>
 	</div>
 </template>

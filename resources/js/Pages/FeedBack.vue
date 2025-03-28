@@ -15,14 +15,10 @@
 						<div class="error-text" v-html="errors" v-if="errors"></div>
 						<GoogleCaptcha ref="googleCaptcha"></GoogleCaptcha>
 						<div v-show="visible" class="contact_email">
-							<LabelInput ref="name" v-model="name" type="text" name="name" id="contact_name">
-								&nbsp;Введите ваше имя:</LabelInput>
-							<LabelInput ref="email" v-model="email" type="text" name="name" id="contact_email">
-								&nbsp;E-mail адрес:</LabelInput>
-							<LabelInput ref="subject" v-model="subject" type="text" name="subject" id="contact_subject">
-								&nbsp;Тема сообщения:</LabelInput>
-							<LabelTextarea ref="message" v-model="message" name="message" id="contact_message">
-								&nbsp;Введите текст вашего сообщения:</LabelTextarea>
+							<LabelInput ref="name" v-model="name" type="text" name="name" id="contact_name">&nbsp;Введите ваше имя:</LabelInput>
+							<LabelInput ref="email" v-model="email" type="text" name="name" id="contact_email">&nbsp;E-mail адрес:</LabelInput>
+							<LabelInput ref="subject" v-model="subject" type="text" name="subject" id="contact_subject">&nbsp;Тема сообщения:</LabelInput>
+							<LabelTextarea ref="message" v-model="message" name="message" id="contact_message">&nbsp;Введите текст вашего сообщения:</LabelTextarea>
 							<div class="mb-4">
 								<Checkbox name="copy" v-model="copy" id="contact_email_copy" value="1" />
 								<label for="contact_email_copy">Отправить копию этого сообщения на ваш адрес</label>
@@ -47,6 +43,9 @@ import Textarea from '@/Components/Forms/Textarea.vue';
 import Checkbox from '@/Components/Forms/Checkbox.vue';
 import LabelInput from '@/Components/Blocks/LabelInput.vue';
 import LabelTextarea from '@/Components/Blocks/LabelTextarea.vue';
+import check from "@/Methods/check.js";
+import captcha from "@/Methods/captcha.js";
+import ajax from "@/Methods/ajax.js";
 
 export default {
 	name: "Page",
@@ -65,9 +64,6 @@ export default {
 	],
 	data() {
 		return {
-			errors: '',
-			success: '',
-			regexpEmail: /^(?:[a-z0-9._]+(?:[-_.]?[a-z0-9._]+)?@[a-z0-9_.-]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i,
 			name: '',
 			subject: '',
 			email: '',
@@ -78,37 +74,8 @@ export default {
 			data: Object
 		}
 	},
+	mixins: [check, captcha, ajax],
 	methods: {
-		clearParams() {
-			this.$data.errors = '';
-			this.$data.success = '';
-		},
-		reloadCaptcha() {
-			this.$refs.googleCaptcha.initReCaptcha();
-		},
-		checkName() {
-			if (this.$refs.name.get().length < 2) {
-				this.$data.errors += '<p>Имя не введено</p>';
-			}
-		},
-		checkEMail() {
-			if (!this.$refs.email.get().match(this.$data.regexpEmail)) {
-				this.$data.errors += '<p>Некорректно введен е-майл</p>';
-			}
-		},
-		checkSubject() {
-			if (this.$refs.subject.get().length < 2) {
-				this.$data.errors += '<p>Тема не введена</p>';
-			}
-		},
-		checkMessage() {
-			if (this.$refs.message.get().length < 2) {
-				this.$data.errors += '<p>Не введено сообщение</p>';
-			}
-		},
-		isError() {
-			return this.$data.errors != '' ? true : false;
-		},
 		getData() {
 			this.$data.name = this.$refs.name.get();
 			this.$data.email = this.$refs.email.get();
@@ -119,31 +86,29 @@ export default {
 		},
 		send() {
 			this.clearParams();
-			this.checkName();
-			this.checkSubject();
-			this.checkEMail();
-			this.checkMessage();
+			this.checkName(this.$refs.name.get());
+			this.checkSubject(this.$refs.subject.get());
+			this.checkEMail(this.$refs.email.get());
+			this.checkMessage(this.$refs.message.get());
 			if (this.isError()) return false;
 			this.getData();
-			this.ajax();
+			this.ajax(route('feedback', this.$data));
 
 			return false;
 		},
-		ajax() {
-			axios.post(route('feedback', this.$data))
-				.then(res => {
-					let success = res.data.success;
-					if (success == 1) {
-						this.success = '<p>Ваше сообщение было успешно отправлено!</p>';
-						this.reloadCaptcha();
-						this.$data.visible = false;
-					}
-				})
-				.catch(res => {
-					this.$data.errors += '<p>' + res.response.data.message + '</p>';
-					this.reloadCaptcha();
-				});
-			return false;
+		ajaxError(res)
+		{
+			this.$data.errors += '<p>' + res.response.data.message + '</p>';
+			this.reloadCaptcha();
+		},
+		ajaxSuccess(res)
+		{
+			let success = res.data.success;
+			if (success == 1) {
+				this.success = '<p>Ваше сообщение было успешно отправлено!</p>';
+				this.reloadCaptcha();
+				this.$data.visible = false;
+			}
 		}
 	}
 }
