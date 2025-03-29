@@ -30,11 +30,10 @@ class ItemController extends Controller
 	* @param int $id
 	* @return \Illuminate\Http\Response
 	*/
-	public function getItem($name, $id)
+	public function get($name, $id)
 	{
 		$post				= $this->postRepository->getById($id);
 		$data = [
-			'title'			=> $post->title . ' Земля как планета',
 			'post'			=> new PostResource($post)
 		];
 		return Inertia::render('Post', $data);

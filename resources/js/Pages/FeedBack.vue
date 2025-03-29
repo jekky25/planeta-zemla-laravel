@@ -1,4 +1,5 @@
 <template>
+	<Head title="Обратная связь, Земля как планета" />
 	<div class="componentheading"></div>
 	<div id="component-contact">
 		<div class="componentheading"></div>

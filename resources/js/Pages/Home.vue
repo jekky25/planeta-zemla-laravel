@@ -1,5 +1,7 @@
 <template>
-	<h2 v-if="category">{{ $category.title }}</h2>
+	<Head v-if="category" :title="`${category.title} Земля как планета`" />
+	<Head v-else title="Земля как планета" />
+	<h2 v-if="category">{{ category.title }}</h2>
 	<h2 v-else>Главная</h2>
 	<table v-if="posts" class="blog" cellpadding="0" cellspacing="0">
 		<tr valign="top">
@@ -46,7 +48,8 @@ export default {
 	layout: MainLayout,
 	props: [
 		'posts',
-		'pagination'
+		'pagination',
+		'category'
 	],
 	data() {
 			return {

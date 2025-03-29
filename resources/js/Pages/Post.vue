@@ -1,4 +1,5 @@
 <template>
+	<Head v-if="post" :title="`${post.title} Земля как планета`" />
 	<template v-if="post">
 		<div class="componentheading"></div>
 		<h2 v-if="post.category" class="contentheading"><Link :href="route('item.name',[post.category.slug, post.id, post.slug])" class="contentpagetitle">{{ post.title }}</Link></h2>
