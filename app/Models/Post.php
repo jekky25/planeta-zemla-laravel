@@ -17,6 +17,11 @@ class Post extends Model
 		'-1' => 'vote-poor'
 		];
 
+	public function getFulltextAttribute($val)
+	{
+		return str_replace('<img src="images', '<img src="../../images', $val);
+	}
+
 	/**
 	* get post for the home page
 	*/		

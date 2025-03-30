@@ -33,10 +33,7 @@ class ItemController extends Controller
 	public function get($name, $id)
 	{
 		$post				= $this->postRepository->getById($id);
-		$data = [
-			'post'			=> new PostResource($post)
-		];
-		return Inertia::render('Post', $data);
+		return Inertia::render('Post', ['post' => new PostResource($post)]);
 	}
 
 	/**
