@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\FeedBackRequest;
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Services\EmailService;
+use App\Jobs\SendFeedBackJob;
+use Inertia\Inertia;
 
 class FeedbackController extends Controller
 {
@@ -16,8 +17,7 @@ class FeedbackController extends Controller
 	 */
 	public function get()
 	{
-		$title = 'Обратная связь, Земля как планета';
-		return Inertia::render('FeedBack', ['title'		=> $title]);
+		return Inertia::render('FeedBack', ['title'		=> 'Обратная связь, Земля как планета']);
 	}
 
 	/**
@@ -27,7 +27,7 @@ class FeedbackController extends Controller
 	 */
 	public function send(FeedBackRequest $request, EmailService $email)
 	{
-		$email->send($request->validated(), 'feedback');
+		$email->send($request->validated(), SendFeedBackJob::class);
 		return response()->json(['success' => 1]);
 	}
 }

@@ -19,7 +19,7 @@ class FeedBackRequest extends FormRequest
 			'subject'				=> ['required', 'max:300'],
 			'message'				=> ['required', 'max:1000'],
 			'recaptcha_response'	=> ['required', new GoogleCaptcha],
-			'email_copy'			=> ['bool']
+			'copy'					=> ['bool']
 		];
 	}
 
@@ -52,7 +52,7 @@ class FeedBackRequest extends FormRequest
 	public function validated($key = null, $default = null)
 	{
 		$ar = $this->validator->validated();
-		$ar['email_copy'] = !empty ($ar['email_copy']) ?: 0;
+		$ar['copy'] = !empty ($ar['copy']) ?: 0;
 		return data_get($ar, $key, $default);
 	}
 }

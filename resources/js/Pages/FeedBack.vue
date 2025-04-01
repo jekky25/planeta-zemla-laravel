@@ -71,6 +71,7 @@ export default {
 			message: '',
 			proba: '',
 			recaptcha_response: '',
+			copy: 0,
 			visible: true,
 			data: Object
 		}
@@ -84,6 +85,7 @@ export default {
 			this.$data.message = this.$refs.message.get();
 			this.$data._token = this.csrf_field;
 			this.recaptcha_response = document.getElementById('recaptchaResponse').value;
+			this.$data.copy = this.copy;
 		},
 		send() {
 			this.clearParams();
