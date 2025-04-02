@@ -13,7 +13,7 @@ class EmailService
 	 */
 	public function send($params, $class)
 	{
-		$params['to'] = config('app.admin_email');
+		$params['to'] = config('app.admin_to_email');
 		dispatch(new $class($params));
 		if (!empty($params['copy'])) {
 			$params['to'] = $params['email'];

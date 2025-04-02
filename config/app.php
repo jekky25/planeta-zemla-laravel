@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://planeta-zemla.ru/'),
     'admin_email' => env('ADMIN_EMAIL', 'support@planeta-zemla.ru'),
+    'admin_to_email' => env('ADMIN_TO_EMAIL', 'support@planeta-zemla.ru'),
+    
 
     'asset_url' => env('ASSET_URL', null),
 
